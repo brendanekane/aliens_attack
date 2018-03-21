@@ -3,7 +3,7 @@ const Util  = require("./util.js");
 
 const ALIENDEFAULT = {
   color: 'red',
-  radius: 15
+  radius: 10
 };
 
 
