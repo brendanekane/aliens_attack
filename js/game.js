@@ -13,17 +13,13 @@ class Game {
         this.aliens.push(new Alien({pos: [alienX, alienY]}, this));
       } else if (i < 10) {
         this.aliens.push(new Alien({pos: [(alienX + (i * 35)), alienY]}, this));
-      }
-      else if (i < 20) {
+      } else if (i < 20) {
         this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (35))]}, this));
-      }
-      else if (i < 30) {
+      } else if (i < 30) {
         this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (70))]}, this));
-      }
-      else if (i < 40) {
+      } else if (i < 40) {
         this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (105))]}, this));
-      }
-      else if (i < 50){
+      } else if (i < 50){
         this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (140))]}, this));
       }
     }
