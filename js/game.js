@@ -1,8 +1,11 @@
+const Ship = require("./ship.js");
+
 class Game {
   constructor() {
     this.aliens = [];
     this.moveBool = true;
     this.addAliens();
+    this.ship = [];
   }
 
   addAliens() {
@@ -31,8 +34,8 @@ class Game {
 
   draw(ctx) {
     ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
-    this.aliens.forEach(alien => {
-      alien.draw(ctx);
+    this.allObjects(ctx).forEach(object => {
+      object.draw(ctx);
     });
   }
 
@@ -58,6 +61,27 @@ class Game {
         });
       }
     }
+  }
+
+  allObjects(ctx) {
+    return [].concat(this.aliens, this.ship);
+  }
+
+
+  moveObjects(ctx) {
+    // this makes everything move too fast?
+    // this.allObjects(ctx).forEach(object => {
+    //   if (object instanceof Alien) {
+    //     this.moveAliens(ctx);
+    //   }
+    // });
+    this.moveAliens(ctx);
+  }
+
+  createShip() {
+    const ship = new Ship({pos: [250, 600]});
+    this.ship.push(ship);
+    return ship;
   }
 
 
