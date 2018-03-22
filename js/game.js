@@ -1,7 +1,7 @@
 class Game {
   constructor() {
     this.aliens = [];
-
+    this.moveBool = true;
     this.addAliens();
   }
 
@@ -37,10 +37,30 @@ class Game {
   }
 
   moveAliens(ctx) {
-    this.aliens.forEach(alien => {
-      alien.move(ctx);
-    });
+    if (this.aliens[9].pos[0] < 490 && this.moveBool) {
+      this.aliens.forEach(alien => {
+        alien.move(ctx);
+      });
+      if (this.aliens[9].pos[0] > 489) {
+        this.aliens.forEach(alien => {
+          alien.pos[1] = alien.pos[1] + 5;
+        });
+      }
+    } else {
+      this.moveBool = false;
+      this.aliens.forEach(alien => {
+        alien.reverse(ctx);
+      });
+      if (this.aliens[0].pos[0] < 10) {
+        this.moveBool = true;
+        this.aliens.forEach(alien => {
+          alien.pos[1] = alien.pos[1] + 5;
+        });
+      }
+    }
   }
+
+
 
 }
 
