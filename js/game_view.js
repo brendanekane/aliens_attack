@@ -1,10 +1,11 @@
 const Game = require("./game.js");
+const Alien = require("./alien.js");
 
 class GameView {
   constructor(game, ctx) {
     this.game = game;
     this.ctx = ctx;
-    this.ship = this.game.createShip();
+    this.ship = game.ship[0];
   }
 
   start() {
@@ -20,7 +21,12 @@ class GameView {
       });
     });
     key('space', () =>{
+      const aliens = this.game.aliens;
+      const alien = aliens[Math.floor((Math.random() * aliens.length))];
+      debugger
+      const alienPos = alien.pos
       this.ship.shoot();
+      alien.shoot(alienPos);
     });
   }
 

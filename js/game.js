@@ -7,7 +7,16 @@ class Game {
     this.aliens = [];
     this.addAliens();
     this.ship = [];
+    this.createShip();
     this.bullets = [];
+  }
+
+// create objects, push to respective arrays, draw
+
+  createShip() {
+    const ship = new Ship({pos: [250, 600], game: this});
+    this.ship.push(ship);
+    return ship;
   }
 
   addAliens() {
@@ -30,8 +39,13 @@ class Game {
     }
   }
 
-  alienPosition() {
-    return [100,150];
+  pushBullet(bullet) {
+    // debugger
+    this.bullets.push(bullet);
+  }
+
+  allObjects(ctx) {
+    return [].concat(this.aliens, this.ship, this.bullets);
   }
 
   draw(ctx) {
@@ -40,6 +54,8 @@ class Game {
       object.draw(ctx);
     });
   }
+
+// Object movements
 
   moveAliens(ctx) {
     let rightBound = false;
@@ -77,11 +93,6 @@ class Game {
     });
   }
 
-  allObjects(ctx) {
-    return [].concat(this.aliens, this.ship, this.bullets);
-  }
-
-
   moveObjects(ctx) {
     // this makes everything move too fast?
     // this.allObjects(ctx).forEach(object => {
@@ -93,15 +104,7 @@ class Game {
     this.moveBullets(ctx);
   }
 
-  createShip() {
-    const ship = new Ship({pos: [250, 600], game: this});
-    this.ship.push(ship);
-    return ship;
-  }
-
-  pushBullet(bullet) {
-    this.bullets.push(bullet);
-  }
+// Collision detection and removal
 
   checkCollisions() {
     const allObjs = this.allObjects();
@@ -111,6 +114,8 @@ class Game {
         const obj1 = allObjs[i];
         const obj2 = allObjs[j];
         if (obj1 == obj2 || (obj1 instanceof Ship && obj2 instanceof Bullet) || (obj1 instanceof Bullet && obj2 instanceof Ship)) {continue;}
+        debugger
+        // if (obj1)
         if (obj1.collidedWith(obj2)) {
           const collision = obj1.collisionsToRemove(obj2)
           // alert('COLLISION');
@@ -118,11 +123,6 @@ class Game {
       }
     }
 
-  }
-
-  step(ctx) {
-    this.moveObjects(ctx);
-    this.checkCollisions();
   }
 
   remove(object) {
@@ -135,10 +135,13 @@ class Game {
     }
   }
 
-  ouBounds(pos) {
-    return (pos[0] < 0) || (pos[1] < 0) ||
-      (pos[0] > Game.DIM_X) || (pos[1] > Game.DIM_Y);
+// invocation of game functions
+
+  step(ctx) {
+    this.moveObjects(ctx);
+    this.checkCollisions();
   }
+
 
 
 }

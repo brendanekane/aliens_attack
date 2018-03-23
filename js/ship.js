@@ -21,9 +21,9 @@ class Ship extends MovingObject {
   }
 
   shoot() {
+    // debugger
     const bulletPos = this.pos.slice(0);
-    const bullet = new Bullet({pos: bulletPos, game: this.game, alienBullet: true});
-    debugger
+    const bullet = new Bullet({pos: bulletPos, game: this.game});
     this.game.pushBullet(bullet);
   }
 
