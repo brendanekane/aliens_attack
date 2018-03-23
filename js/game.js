@@ -1,15 +1,17 @@
 const Ship = require("./ship.js");
 const Util = require("./util.js");
-const Bullet = require("./bullet");
+const Bullet = require("./bullet.js");
+let shipLives = 3;
 
 class Game {
   constructor() {
     this.aliens = [];
     this.addAliens();
     this.ship = [];
-    this.createShip();
+      this.createShip();
     this.bullets = [];
   }
+
 
 // create objects, push to respective arrays, draw
 
@@ -17,6 +19,16 @@ class Game {
     const ship = new Ship({pos: [250, 600], game: this});
     this.ship.push(ship);
     return ship;
+  }
+
+  createNewShip() {
+    // debugger
+    if (this.ship.length === 0 && shipLives >= 0) {
+      debugger
+      const ship = new Ship({pos: [250, 600], game: this});
+      this.ship.push(ship);
+      return ship;
+    }
   }
 
   addAliens() {
@@ -39,8 +51,14 @@ class Game {
     }
   }
 
+  alienShoot(){
+    const aliens = this.aliens;
+    const alien = aliens[Math.floor((Math.random() * aliens.length))];
+    const alienPos = alien.pos.slice(0);
+    alien.shoot(alienPos);
+  }
+
   pushBullet(bullet) {
-    // debugger
     this.bullets.push(bullet);
   }
 
@@ -89,7 +107,11 @@ class Game {
 
   moveBullets(ctx) {
     this.bullets.forEach(bullet => {
-      bullet.pos[1] -= 5;
+      if (bullet.alienBullet === false) {
+        bullet.pos[1] -= 5;
+      } else {
+        bullet.pos[1] += 5;
+      }
     });
   }
 
@@ -113,25 +135,26 @@ class Game {
       for (let j=0; j < allObjs.length; j++) {
         const obj1 = allObjs[i];
         const obj2 = allObjs[j];
-        if (obj1 == obj2 || (obj1 instanceof Ship && obj2 instanceof Bullet) || (obj1 instanceof Bullet && obj2 instanceof Ship)) {continue;}
-        debugger
-        // if (obj1)
+        if (obj1 == obj2 || (obj1 instanceof Ship && obj2.alienBullet === false) || (obj1.alienBullet === false && obj2 instanceof Ship)) {continue;}
+        if ((obj1.alienBullet === true && obj2 instanceof Alien) || (obj1 instanceof Alien && obj2.alienBullet === true)) {continue;}
         if (obj1.collidedWith(obj2)) {
-          const collision = obj1.collisionsToRemove(obj2)
-          // alert('COLLISION');
+          const collision = obj1.collisionsToRemove(obj2);
         }
       }
     }
 
   }
 
+
+
   remove(object) {
     if (object instanceof Bullet) {
-      // debugger
       this.bullets.splice(this.bullets.indexOf(object), 1);
     } else if (object instanceof Alien) {
-      // debugger
       this.aliens.splice(this.aliens.indexOf(object), 1);
+    } else if (object instanceof Ship) {
+      this.ship.splice(this.ship.indexOf(object), 1);
+      shipLives -= 1;
     }
   }
 
@@ -140,6 +163,7 @@ class Game {
   step(ctx) {
     this.moveObjects(ctx);
     this.checkCollisions();
+    this.createNewShip();
   }
 
 

@@ -7,10 +7,6 @@ const BULLETDEFAULT = {
   color: 'grey'
 };
 
-const defaultOptions = {
-  alienBullet: false
-
-};
 
 class Bullet extends MovingObject {
   constructor(options) {

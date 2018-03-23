@@ -5,28 +5,29 @@ class GameView {
   constructor(game, ctx) {
     this.game = game;
     this.ctx = ctx;
-    this.ship = game.ship[0];
+    // this.ship = game.ship[0];
   }
 
   start() {
     setInterval(Game.prototype.step.bind(this.game), 20);
     setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
+    setInterval(Game.prototype.alienShoot.bind(this.game), 2000);
     this.bindKeys();
+  }
+
+  bindShip() {
+    const ship = this.game.ship[0];
+    return ship;
   }
 
   bindKeys() {
     Object.keys(GameView.MOVES).forEach(k => {
       key(k, () => {
-        this.ship.power(GameView.MOVES[k]);
+        this.bindShip().power(GameView.MOVES[k]);
       });
     });
     key('space', () =>{
-      const aliens = this.game.aliens;
-      const alien = aliens[Math.floor((Math.random() * aliens.length))];
-      debugger
-      const alienPos = alien.pos
       this.ship.shoot();
-      alien.shoot(alienPos);
     });
   }
 
