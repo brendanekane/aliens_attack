@@ -13,8 +13,9 @@ class Alien extends MovingObject {
   constructor(options = {}) {
     options.color = ALIENDEFAULT.color;
     options.radius = ALIENDEFAULT.radius;
-    // options.vel = Util.randomVec(5);
+    options.vel = [1, .5];
     super(options);
+    this.health = options.health || 1;
 
   }
 

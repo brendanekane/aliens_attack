@@ -15,6 +15,7 @@ class Bullet extends MovingObject {
       options.color = BULLETDEFAULT.color;
       super(options);
       this.alienBullet = options.alienBullet || false;
+      this.health = 1;
   }
 }
 

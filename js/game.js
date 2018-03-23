@@ -4,12 +4,14 @@ const Bullet = require("./bullet.js");
 let shipLives = 3;
 
 class Game {
-  constructor() {
+  constructor(game) {
     this.aliens = [];
     this.addAliens();
     this.ship = [];
-      this.createShip();
+    this.createShip();
     this.bullets = [];
+    this.game = game
+
   }
 
 
@@ -22,9 +24,7 @@ class Game {
   }
 
   createNewShip() {
-    // debugger
     if (this.ship.length === 0 && shipLives >= 0) {
-      debugger
       const ship = new Ship({pos: [250, 600], game: this});
       this.ship.push(ship);
       return ship;
@@ -35,16 +35,14 @@ class Game {
     for (let i =0; i < Game.NUM_ALIENS;i++) {
       const alienX = 100;
       const alienY = 150;
-      if (i === 0) {
-        this.aliens.push(new Alien({pos: [alienX, alienY], game: this}, this));
-      } else if (i < 10) {
-        this.aliens.push(new Alien({pos: [(alienX + (i * 35)), alienY], game: this}, this));
+      if (i < 10) {
+        this.aliens.push(new Alien({pos: [(alienX + (i * 35)), alienY], game: this, health: 5}, this));
       } else if (i < 20) {
-        this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (35))], game: this}, this));
+        this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (35))], game: this, health: 4}, this));
       } else if (i < 30) {
-        this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (70))], game: this}, this));
+        this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (70))], game: this, health: 3}, this));
       } else if (i < 40) {
-        this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (105))], game: this}, this));
+        this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (105))], game: this, health: 2}, this));
       } else if (i < 50){
         this.aliens.push(new Alien({pos: [(alienX + ((i % 10) * 35)), (alienY + (140))], game: this}, this));
       }
@@ -76,11 +74,12 @@ class Game {
 // Object movements
 
   moveAliens(ctx) {
+
     let rightBound = false;
     for (let i=0; i < this.aliens.length; i++) {
       if (this.aliens[i].pos[0] > (Game.DIM_X - 15)) {
         this.aliens.forEach(alien => {
-          alien.pos[1] += .5;
+          alien.pos[1] += alien.vel[1];
         });
         this.rightBound = true;
       }
@@ -89,7 +88,7 @@ class Game {
     for (let i=0; i < this.aliens.length; i++) {
       if (this.aliens[i].pos[0] < 10) {
         this.aliens.forEach(alien => {
-          alien.pos[1] += .5;
+          alien.pos[1] += alien.vel[1];
         });
         this.rightBound = false;
       }
@@ -100,6 +99,7 @@ class Game {
       });
     } else {
       this.aliens.forEach(alien => {
+        // debugger
         alien.move(ctx);
       });
     }
@@ -122,6 +122,7 @@ class Game {
     //     this.moveAliens(ctx);
     //   }
     // });
+    // debugger
     this.moveAliens(ctx);
     this.moveBullets(ctx);
   }
@@ -138,6 +139,13 @@ class Game {
         if (obj1 == obj2 || (obj1 instanceof Ship && obj2.alienBullet === false) || (obj1.alienBullet === false && obj2 instanceof Ship)) {continue;}
         if ((obj1.alienBullet === true && obj2 instanceof Alien) || (obj1 instanceof Alien && obj2.alienBullet === true)) {continue;}
         if (obj1.collidedWith(obj2)) {
+          obj1.health -= 1;
+          obj2.health -= 1;
+          if (obj1 instanceof Bullet) {
+            this.remove(obj1);
+          }
+        }
+        if (obj1.health <= 0 && obj2.health <= 0) {
           const collision = obj1.collisionsToRemove(obj2);
         }
       }
@@ -151,6 +159,7 @@ class Game {
     if (object instanceof Bullet) {
       this.bullets.splice(this.bullets.indexOf(object), 1);
     } else if (object instanceof Alien) {
+      debugger
       this.aliens.splice(this.aliens.indexOf(object), 1);
     } else if (object instanceof Ship) {
       this.ship.splice(this.ship.indexOf(object), 1);
@@ -161,6 +170,7 @@ class Game {
 // invocation of game functions
 
   step(ctx) {
+    // debugger
     this.moveObjects(ctx);
     this.checkCollisions();
     this.createNewShip();

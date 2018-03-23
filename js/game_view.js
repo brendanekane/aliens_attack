@@ -11,6 +11,8 @@ class GameView {
   start() {
     setInterval(Game.prototype.step.bind(this.game), 20);
     setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
+    // this.lastTime = 0;
+    // requestAnimationFrame(this.animate.bind(this));
     setInterval(Game.prototype.alienShoot.bind(this.game), 2000);
     this.bindKeys();
   }
@@ -27,19 +29,28 @@ class GameView {
       });
     });
     key('space', () =>{
-      this.ship.shoot();
+      this.bindShip().shoot();
     });
   }
 
+  // animate(time) {
+  //   const timeDelta = time - this.lastTime;
+  //   Game.prototype.step(timeDelta);
+  //   Game.prototype.draw(this.ctx);
+  //   this.lastTime = time;
+  //
+  //   requestAnimationFrame(this.animate.bind(this));
+  // }
 }
+
 
 
 GameView.MOVES ={
   // w: [0, -3],
   // s: [0, 3],
-  a: [-3, 0],
-  d: [3, 0],
-  left: [-3, 0],
-  right: [3, 0]
+  a: [-5, 0],
+  d: [5, 0],
+  left: [-5, 0],
+  right: [5, 0]
 };
 module.exports = GameView;

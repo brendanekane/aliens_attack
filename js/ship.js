@@ -13,15 +13,15 @@ class Ship extends MovingObject {
     options.radius = SHIPDEFAULT.radius;
     options.vel = SHIPDEFAULT.vel;
     super(options);
+    this.health = 5;
   }
 
   power(impulse) {
+    debugger
     this.pos[0] += impulse[0];
-    this.pos[1] += impulse[1];
   }
 
   shoot() {
-    // debugger
     const bulletPos = this.pos.slice(0);
     const bullet = new Bullet({pos: bulletPos, game: this.game});
     this.game.pushBullet(bullet);

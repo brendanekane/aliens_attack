@@ -24,14 +24,16 @@ class MovingObject {
     ctx.fill();
   }
 
-  move() {
+  move(timeDelta) {
     // this.pos[0] = this.pos[0] + (this.pos[0] * this.vel[0]);
     // this.pos[1] = this.pos[1] + (this.pos[1] * this.vel[1]);
-    this.pos[0] = this.pos[0] + 1;
+    if (this instanceof Alien) {
+      this.pos[0] += this.vel[0];
+    }
   }
 
-  reverse(ctx) {
-    this.pos[0] = this.pos[0] - 1;
+  reverse() {
+    this.pos[0] -= this.vel[0];
   }
 
   collidedWith(otherObj) {
@@ -40,9 +42,10 @@ class MovingObject {
   }
 
   collisionsToRemove(otherObj) {
-    // debugger
+    debugger
     this.game.remove(otherObj);
   }
+
 
 }
 
