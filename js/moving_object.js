@@ -1,11 +1,14 @@
+const Util = require("./util.js");
+
 class MovingObject {
   constructor(options) {
     this.pos = options.pos;
     this.vel = options.vel;
     this.radius = options.radius;
     this.color = options.color;
-
+    this.game = options.game;
   }
+
 
   draw(ctx) {
     ctx.fillStyle = this.color;
@@ -29,6 +32,16 @@ class MovingObject {
 
   reverse(ctx) {
     this.pos[0] = this.pos[0] - 1;
+  }
+
+  collidedWith(otherObj) {
+    const center = Util.distance(this.pos, otherObj.pos);
+    return center < (this.radius + otherObj.radius);
+  }
+
+  collisionsToRemove(otherObj) {
+    // debugger
+    this.game.remove(otherObj);
   }
 
 }

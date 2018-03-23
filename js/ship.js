@@ -1,4 +1,5 @@
 const MovingObject = require("./moving_object.js");
+const Bullet = require("./bullet.js");
 
 const SHIPDEFAULT = {
   color: 'black',
@@ -17,6 +18,13 @@ class Ship extends MovingObject {
   power(impulse) {
     this.pos[0] += impulse[0];
     this.pos[1] += impulse[1];
+  }
+
+  shoot() {
+    const bulletPos = this.pos.slice(0);
+    const bullet = new Bullet({pos: bulletPos, game: this.game, alienBullet: true});
+    debugger
+    this.game.pushBullet(bullet);
   }
 
 }
