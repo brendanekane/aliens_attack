@@ -1,11 +1,24 @@
 const Game = require("./game.js");
 const Alien = require("./alien.js");
+const Ship = require("./ship.js");
+const Starfield = require('canvas-starfield');
 
 class GameView {
   constructor(game, ctx) {
     this.game = game;
     this.ctx = ctx;
-    // this.ship = game.ship[0];
+  }
+
+  sf() {
+
+    return new Starfield({
+      canvas: '#star-canvas',
+      numStars: 800,
+      dx: 0.05,
+      dy: 0.025,
+      maxRadius: 2,
+      shootingStarInterval: 5
+    });
   }
 
   start() {
@@ -15,6 +28,7 @@ class GameView {
     // requestAnimationFrame(this.animate.bind(this));
     setInterval(Game.prototype.alienShoot.bind(this.game), 2000);
     this.bindKeys();
+    this.sf().start()
   }
 
   bindShip() {

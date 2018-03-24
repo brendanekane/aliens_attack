@@ -1,0 +1,20 @@
+.ship{
+  display: none;
+}
+
+.alien{
+  display: none;
+}
+
+.bullet{
+  display: none;
+}
+
+.cover{
+  display: none;
+}
+
+#game-canvas{
+  position: absolute;
+
+}
