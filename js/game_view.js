@@ -22,11 +22,11 @@ class GameView {
   }
 
   start() {
-    setInterval(Game.prototype.step.bind(this.game), 20);
-    setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
+    setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
+    // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
     // this.lastTime = 0;
     // requestAnimationFrame(this.animate.bind(this));
-    setInterval(Game.prototype.alienShoot.bind(this.game), 2000);
+    setInterval(Game.prototype.alienShoot.bind(this.game), 1500);
     this.bindKeys();
     this.sf().start()
   }
@@ -42,7 +42,7 @@ class GameView {
         this.bindShip().power(GameView.MOVES[k]);
       });
     });
-    key('space', () =>{
+    key('f', () =>{
       this.bindShip().shoot();
     });
   }

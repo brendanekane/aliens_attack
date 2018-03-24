@@ -1,0 +1,18 @@
+.canvas-container{
+  display: flex;
+  justify-content: center;
+}
+
+#game-canvas{
+  border-radius: 25px;
+  box-shadow: 10px 10px 5px grey;
+}
+
+#star-canvas{
+  border-radius: 25px;
+}
+
+h1{
+  display: flex;
+  justify-content: center;
+}

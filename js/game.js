@@ -1,8 +1,8 @@
 const Ship = require("./ship.js");
 const Util = require("./util.js");
 const Bullet = require("./bullet.js");
-const ShipCover = require("./ship_cover.js")
-let shipLives = 3;
+const ShipCover = require("./ship_cover.js");
+let shipLives = 1;
 
 class Game {
   constructor(game) {
@@ -27,7 +27,7 @@ class Game {
   }
 
   createNewShip() {
-    if (this.ship.length === 0 && shipLives >= 0) {
+    if (this.ship.length === 0 && shipLives > 0) {
       const ship = new Ship({pos: [350, 640], game: this});
       this.ship.push(ship);
       return ship;
@@ -65,10 +65,12 @@ class Game {
   }
 
   alienShoot(){
-    const aliens = this.aliens;
-    const alien = aliens[Math.floor((Math.random() * aliens.length))];
-    const alienPos = alien.pos.slice(0);
-    alien.shoot(alienPos);
+    if (shipLives !== 0) {
+      const aliens = this.aliens;
+      const alien = aliens[Math.floor((Math.random() * aliens.length))];
+      const alienPos = alien.pos.slice(0);
+      alien.shoot(alienPos);
+    }
   }
 
   pushBullet(bullet) {
@@ -126,7 +128,6 @@ class Game {
 // Object movements
 
   moveAliens(ctx) {
-
     let rightBound = false;
     for (let i=0; i < this.aliens.length; i++) {
       if (this.aliens[i].pos[0] > (Game.DIM_X - 28)) {
@@ -191,7 +192,6 @@ class Game {
         else if ((obj1 instanceof Ship && obj2.alienBullet === false) || (obj1.alienBullet === false && obj2 instanceof Ship)) {continue;}
         else if ((obj1.alienBullet === true && obj2 instanceof Alien) || (obj1 instanceof Alien && obj2.alienBullet === true)) {continue;}
         else if (obj1.collidedWith(obj2)) {
-          debugger
           obj1.health -= 1;
           if (obj1.health === 0) {
             this.remove(obj1);
@@ -222,11 +222,26 @@ class Game {
     }
   }
 
+
+// Game Over
+
+ gameOver(ctx) {
+   debugger
+   ctx.font = "30px Arial";
+   ctx.fillStyle = 'yellow'
+   ctx.fillText("Game Over",275,350);
+ }
+
 // invocation of game functions
 
   step(ctx) {
-    this.moveObjects(ctx);
-    this.checkCollisions();
+    if (shipLives !== 0) {
+      this.draw(ctx);
+      this.moveObjects(ctx);
+      this.checkCollisions();
+    } else if (shipLives === 0){
+      this.gameOver(ctx);
+    }
     this.createNewShip();
   }
 

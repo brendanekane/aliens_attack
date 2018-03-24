@@ -22,7 +22,7 @@ class Ship extends MovingObject {
 
   shoot() {
     const bulletPos = this.pos.slice(0);
-    bulletPos[0] += 18;
+    bulletPos[0];
     const bullet = new Bullet({pos: bulletPos, game: this.game});
     this.game.pushBullet(bullet);
   }
