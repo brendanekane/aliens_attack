@@ -17,7 +17,13 @@ class Ship extends MovingObject {
   }
 
   power(impulse) {
-    this.pos[0] += impulse[0];
+    if (this.pos[0] > 19 && this.pos[0] < 673){
+      this.pos[0] += impulse[0];
+    } else if (this.pos[0] >= 673) {
+      this.pos[0] -= 2;
+    } else if(this.pos[0] <= 19) {
+      this.pos[0] += 2;
+    }
   }
 
   shoot() {

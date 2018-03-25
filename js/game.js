@@ -134,9 +134,11 @@ class Game {
 
   moveAliens(ctx) {
     let rightBound = false;
+
+    // check if right bound of canvas is next move, speed up velocity,
+    // change y position
     for (let i=0; i < this.aliens.length; i++) {
-      if (this.aliens.length > 20) {
-        if (this.aliens[i].pos[0] > (Game.DIM_X - 28)) {
+      if ((this.aliens.length > 20) && (this.aliens[i].pos[0] > (Game.DIM_X - 28))) {
           this.aliens.forEach(alien => {
             alien.vel[0] += .01;
             // debugger
@@ -144,7 +146,6 @@ class Game {
             // debugger
           });
           this.rightBound = true;
-        }
       } else {
         if (this.aliens[i].pos[0] > (Game.DIM_X - 28)) {
           this.aliens.forEach(alien => {
@@ -157,15 +158,16 @@ class Game {
       }
     }
 
+    //check if left bound of canvas is next move, speed of velocity,
+    // change y position
     for (let i=0; i < this.aliens.length; i++) {
-      if (this.aliens.length > 20) {
-        if (this.aliens[i].pos[0] < 16) {
+      if ((this.aliens.length > 20) && (this.aliens[i].pos[0] < 16)) {
           this.aliens.forEach(alien => {
             alien.vel[0] += .05;
             alien.pos[1] += alien.vel[1];
           });
           this.rightBound = false;
-        }
+
       } else {
         if (this.aliens[i].pos[0] < 16) {
           this.aliens.forEach(alien => {
@@ -235,7 +237,9 @@ class Game {
         if (obj1 == obj2) {continue;}
         else if ((obj1 instanceof Ship && obj2.alienBullet === false) || (obj1.alienBullet === false && obj2 instanceof Ship)) {continue;}
         else if ((obj1.alienBullet === true && obj2 instanceof Alien) || (obj1 instanceof Alien && obj2.alienBullet === true)) {continue;}
-        else if (obj1.collidedWith(obj2)) {
+        else if ((obj1 instanceof Alien && obj2 instanceof Ship) && (obj1.collidedWith(obj2))) {
+          this.shipLives = 0;
+        } else if (obj1.collidedWith(obj2)) {
           obj1.health -= 1;
           if (obj1.health === 0) {
             this.remove(obj1);
@@ -263,20 +267,6 @@ class Game {
 
 // Game Over Conditions
 
-  aliensLeft() {
-    let aliensAreLow = false;
-    this.aliens.forEach(alien => {
-      if (alien.pos[1] >= 220) {
-        debugger
-        aliensAreLow = true;
-        debugger
-      }
-
-    });
-    debugger
-    return aliensAreLow;
-  }
-
  gameOver(ctx) {
 
    ctx.font = "50px uni_05_53regular";
@@ -298,9 +288,6 @@ class Game {
       this.moveObjects(ctx);
       this.checkCollisions();
     } else if (this.shipLives === 0 ){
-      this.gameOver(ctx);
-    } else if (this.aliensLeft()){
-      debugger
       this.gameOver(ctx);
     } else if (this.aliens.length === 0) {
       this.win(ctx);

@@ -1,6 +1,6 @@
 const Game = require('./game.js');
 const GameView = require("./game_view.js");
-
+let gameTheme;
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementsByTagName("canvas")[0];
@@ -9,4 +9,24 @@ document.addEventListener("DOMContentLoaded", () => {
     window.canvasEl = canvasEl;
     const game = new Game();
     new GameView(game, ctx).start();
+    new sound("../assets/audio/theme.mp3")
+    debugger
 });
+
+
+const sound = (src) =>{
+  debugger
+  this.sound = document.createElement("audio");
+  debugger
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  };
+  this.stop = function(){
+    this.sound.pause();
+  };
+};
