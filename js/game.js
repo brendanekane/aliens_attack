@@ -1,8 +1,9 @@
+const Alien = require('./alien.js');
 const Ship = require("./ship.js");
 const Util = require("./util.js");
 const Bullet = require("./bullet.js");
 const ShipCover = require("./ship_cover.js");
-let shipLives = 1;
+let shipLives = 4;
 
 class Game {
   constructor(game) {

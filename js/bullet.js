@@ -1,5 +1,4 @@
 const MovingObject = require("./moving_object.js");
-const Game = require("./game.js")
 
 const BULLETDEFAULT = {
   radius: 2,

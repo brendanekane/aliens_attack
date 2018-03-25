@@ -1,8 +1,5 @@
 const MovingObject = require("./moving_object.js");
-const Util  = require("./util.js");
-const Game = require("./game.js");
 const Bullet = require("./bullet.js");
-
 const ALIENDEFAULT = {
   color: 'red',
   radius: 20

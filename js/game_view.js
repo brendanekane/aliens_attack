@@ -28,7 +28,7 @@ class GameView {
     // requestAnimationFrame(this.animate.bind(this));
     setInterval(Game.prototype.alienShoot.bind(this.game), 1500);
     this.bindKeys();
-    this.sf().start()
+    this.sf().start();
   }
 
   bindShip() {
