@@ -14,20 +14,18 @@ document.addEventListener("DOMContentLoaded", () => {
     theme.play();
 });
 
-
-const sound = (src) =>{
-  debugger
-  this.sound = document.createElement("audio");
-  debugger
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  document.body.appendChild(this.sound);
-  this.play = function(){
-    this.sound.play();
-  };
-  this.stop = function(){
-    this.sound.pause();
-  };
-};
+//not implemented yet
+// const sound = (src) =>{
+//   this.sound = document.createElement("audio");
+//   this.sound.src = src;
+//   this.sound.setAttribute("preload", "auto");
+//   this.sound.setAttribute("controls", "none");
+//   this.sound.style.display = "none";
+//   document.body.appendChild(this.sound);
+//   this.play = function(){
+//     this.sound.play();
+//   };
+//   this.stop = function(){
+//     this.sound.pause();
+//   };
+// };

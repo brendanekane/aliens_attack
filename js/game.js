@@ -28,7 +28,6 @@ class Game {
 
   createNewShip() {
     if (this.ship.length === 0 && this.shipLives > 0) {
-      debugger
       const ship = new Ship({pos: [350, 640], game: this});
       this.ship.push(ship);
       return ship;
@@ -60,9 +59,6 @@ class Game {
     this.cover.push(new ShipCover({pos:[coverX + 160, coverY], game: this, id: 2}));
     this.cover.push(new ShipCover({pos:[coverX + 320, coverY], game: this, id: 3}));
     this.cover.push(new ShipCover({pos:[coverX + 480, coverY], game: this, id: 4}));
-    // for (let i=0; i <= 3; i++) {
-    //
-    // }
   }
 
   alienShoot(){
@@ -142,9 +138,7 @@ class Game {
       if ((this.aliens.length > 20) && (this.aliens[i].pos[0] > (Game.DIM_X - 28))) {
           this.aliens.forEach(alien => {
             alien.vel[0] += .01;
-            // debugger
             alien.pos[1] += alien.vel[1];
-            // debugger
           });
           this.rightBound = true;
       } else {
@@ -190,19 +184,6 @@ class Game {
         alien.move(ctx);
       });
     }
-    // for (let i=0; i < this.aliens.length; i++) {
-    //   if (this.aliens[i].row === 5 && (this.aliens[i].pos[1] > 212)) {
-    //     this.aliens.forEach(alien => {
-    //       alien.vel[0] += .0001;
-    //       debugger
-    //     });
-    //   }
-    // }
-    // this.aliens.forEach(alien => {
-    //   if (alien.row === 5 && alien.pos[1] > 211) {
-    //     debugger
-    //   }
-    // });
   }
 
   moveBullets(ctx) {
@@ -240,35 +221,11 @@ class Game {
         else if ((obj1.alienBullet === true && obj2 instanceof Alien) || (obj1 instanceof Alien && obj2.alienBullet === true)) {continue;}
         else if ((obj1 instanceof Alien && obj2 instanceof Ship) && (obj1.collidedWith(obj2))) {
           this.shipLives = 0;
-        }
-
-        //this randomly deletes some aliens once they reach a certain y position?
-        // else if (obj1.collidedWith(obj2) && ((obj1 instanceof Alien && obj2.alienBullet === false) || obj2 instanceof Alien && obj1.alienBullet === false)) {
-        //   debugger
-        //   obj2.health -= 1;
-        //   if (obj1.health === 0) {
-        //     this.remove(obj1);
-        //     debugger
-        //   } else if (obj2.health === 0) {
-        //     debugger
-        //     this.remove(obj2);
-        //     debugger
-        //   }
-        // }
-
-        // obj1.health -= 1 will make it so anytime a bullet hits a cover every bullet gets removed
-        // obj2.health -= 1 will randomly delete a bunch of aliens once they reach a certain y position,
-        // but only if you have killed a certain amount of aliens. I haven't figured out the number yet
+        } else if ((obj1 instanceof Alien && obj2 instanceof Alien)) {continue;}
         else if (obj1.collidedWith(obj2)) {
-          debugger
           obj2.health -= 1;
-          if (obj1.health <= 0) {
-            this.remove(obj1);
-            debugger
-          } else if (obj2.health <= 0) {
-            debugger
+          if (obj2.health <= 0) {
             this.remove(obj2);
-            debugger
           }
         }
       }
@@ -278,9 +235,7 @@ class Game {
 
   remove(object) {
     if (object instanceof Bullet) {
-      debugger
       this.bullets.splice(this.bullets.indexOf(object), 1);
-      debugger
     } else if (object instanceof Alien) {
       this.aliens.splice(this.aliens.indexOf(object), 1);
     } else if (object instanceof Ship) {

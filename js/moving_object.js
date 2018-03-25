@@ -37,10 +37,10 @@ class MovingObject {
     return center < (this.radius + otherObj.radius);
   }
 
-  collisionsToRemove(otherObj) {
-
-    this.game.remove(otherObj);
-  }
+  // collisionsToRemove(otherObj) {
+  //
+  //   this.game.remove(otherObj);
+  // }
 
 
 }

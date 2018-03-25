@@ -6,7 +6,6 @@ const BULLETDEFAULT = {
   color: 'grey'
 };
 
-
 class Bullet extends MovingObject {
   constructor(options) {
       options.radius = BULLETDEFAULT.radius;

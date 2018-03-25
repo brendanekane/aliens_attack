@@ -5,7 +5,6 @@ const ALIENDEFAULT = {
   radius: 20
 };
 
-
 class Alien extends MovingObject {
   constructor(options = {}) {
     options.color = ALIENDEFAULT.color;
@@ -22,10 +21,6 @@ class Alien extends MovingObject {
     const alienBullet = new Bullet({pos: alienBulletPos, game: this.game, color: 'orange', alienBullet: true});
     this.game.pushBullet(alienBullet);
   }
-
-
-
-
 }
 
 module.exports = Alien;

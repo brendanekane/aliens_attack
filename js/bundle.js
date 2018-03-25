@@ -112,12 +112,13 @@ var MovingObject = function () {
       var center = Util.distance(this.pos, otherObj.pos);
       return center < this.radius + otherObj.radius;
     }
-  }, {
-    key: "collisionsToRemove",
-    value: function collisionsToRemove(otherObj) {
 
-      this.game.remove(otherObj);
-    }
+    // collisionsToRemove(otherObj) {
+    //
+    //   this.game.remove(otherObj);
+    // }
+
+
   }]);
 
   return MovingObject;
@@ -133,13 +134,17 @@ module.exports = MovingObject;
 
 
 var Util = {
-  randomVec: function randomVec(length) {
-    var deg = 2 * Math.PI * Math.random();
-    return Util.scale([Math.sin(deg), Math.cos(deg)], length);
-  },
-  scale: function scale(vec, m) {
-    return [vec[0] * m, vec[1] * m];
-  },
+  // not utilized, planned for deletion
+  //
+  // randomVec(length) {
+  // const deg = 2 * Math.PI * Math.random();
+  // return Util.scale([Math.sin(deg), Math.cos(deg)], length);
+  // },
+  //
+  // scale(vec, m) {
+  // return [vec[0] * m, vec[1] * m];
+  // },
+
   distance: function distance(pos1, pos2) {
     return Math.sqrt(Math.pow(pos1[0] - pos2[0], 2) + Math.pow(pos1[1] - pos2[1], 2));
   }
@@ -235,7 +240,6 @@ var Game = function () {
     key: "createNewShip",
     value: function createNewShip() {
       if (this.ship.length === 0 && this.shipLives > 0) {
-        debugger;
         var ship = new Ship({ pos: [350, 640], game: this });
         this.ship.push(ship);
         return ship;
@@ -269,9 +273,6 @@ var Game = function () {
       this.cover.push(new ShipCover({ pos: [coverX + 160, coverY], game: this, id: 2 }));
       this.cover.push(new ShipCover({ pos: [coverX + 320, coverY], game: this, id: 3 }));
       this.cover.push(new ShipCover({ pos: [coverX + 480, coverY], game: this, id: 4 }));
-      // for (let i=0; i <= 3; i++) {
-      //
-      // }
     }
   }, {
     key: "alienShoot",
@@ -357,9 +358,7 @@ var Game = function () {
         if (this.aliens.length > 20 && this.aliens[i].pos[0] > Game.DIM_X - 28) {
           this.aliens.forEach(function (alien) {
             alien.vel[0] += .01;
-            // debugger
             alien.pos[1] += alien.vel[1];
-            // debugger
           });
           this.rightBound = true;
         } else {
@@ -404,19 +403,6 @@ var Game = function () {
           alien.move(ctx);
         });
       }
-      // for (let i=0; i < this.aliens.length; i++) {
-      //   if (this.aliens[i].row === 5 && (this.aliens[i].pos[1] > 212)) {
-      //     this.aliens.forEach(alien => {
-      //       alien.vel[0] += .0001;
-      //       debugger
-      //     });
-      //   }
-      // }
-      // this.aliens.forEach(alien => {
-      //   if (alien.row === 5 && alien.pos[1] > 211) {
-      //     debugger
-      //   }
-      // });
     }
   }, {
     key: "moveBullets",
@@ -461,37 +447,14 @@ var Game = function () {
             continue;
           } else if (obj1 instanceof Alien && obj2 instanceof Ship && obj1.collidedWith(obj2)) {
             this.shipLives = 0;
-          }
-
-          //this randomly deletes some aliens once they reach a certain y position?
-          // else if (obj1.collidedWith(obj2) && ((obj1 instanceof Alien && obj2.alienBullet === false) || obj2 instanceof Alien && obj1.alienBullet === false)) {
-          //   debugger
-          //   obj2.health -= 1;
-          //   if (obj1.health === 0) {
-          //     this.remove(obj1);
-          //     debugger
-          //   } else if (obj2.health === 0) {
-          //     debugger
-          //     this.remove(obj2);
-          //     debugger
-          //   }
-          // }
-
-          // obj1.health -= 1 will make it so anytime a bullet hits a cover every bullet gets removed
-          // obj2.health -= 1 will randomly delete a bunch of aliens once they reach a certain y position,
-          // but only if you have killed a certain amount of aliens. I haven't figured out the number yet
-          else if (obj1.collidedWith(obj2)) {
-              debugger;
-              obj2.health -= 1;
-              if (obj1.health <= 0) {
-                this.remove(obj1);
-                debugger;
-              } else if (obj2.health <= 0) {
-                debugger;
-                this.remove(obj2);
-                debugger;
-              }
+          } else if (obj1 instanceof Alien && obj2 instanceof Alien) {
+            continue;
+          } else if (obj1.collidedWith(obj2)) {
+            obj2.health -= 1;
+            if (obj2.health <= 0) {
+              this.remove(obj2);
             }
+          }
         }
       }
     }
@@ -499,9 +462,7 @@ var Game = function () {
     key: "remove",
     value: function remove(object) {
       if (object instanceof Bullet) {
-        debugger;
         this.bullets.splice(this.bullets.indexOf(object), 1);
-        debugger;
       } else if (object instanceof Alien) {
         this.aliens.splice(this.aliens.indexOf(object), 1);
       } else if (object instanceof Ship) {
@@ -670,7 +631,6 @@ var Ship = function (_MovingObject) {
     key: "shoot",
     value: function shoot() {
       var bulletPos = this.pos.slice(0);
-      bulletPos[0];
       var bullet = new Bullet({ pos: bulletPos, game: this.game });
       this.game.pushBullet(bullet);
     }
@@ -693,33 +653,32 @@ var GameView = __webpack_require__(8);
 var gameTheme = void 0;
 
 document.addEventListener("DOMContentLoaded", function () {
-  var canvasEl = document.getElementsByTagName("canvas")[0];
-  var ctx = canvasEl.getContext("2d");
-  window.ctx = ctx;
-  window.canvasEl = canvasEl;
-  var game = new Game();
-  new GameView(game, ctx).start();
-  var theme = document.getElementById('theme');
-  theme.loop = true;
-  theme.play();
+    var canvasEl = document.getElementsByTagName("canvas")[0];
+    var ctx = canvasEl.getContext("2d");
+    window.ctx = ctx;
+    window.canvasEl = canvasEl;
+    var game = new Game();
+    new GameView(game, ctx).start();
+    var theme = document.getElementById('theme');
+    theme.loop = true;
+    theme.play();
 });
 
-var sound = function sound(src) {
-  debugger;
-  undefined.sound = document.createElement("audio");
-  debugger;
-  undefined.sound.src = src;
-  undefined.sound.setAttribute("preload", "auto");
-  undefined.sound.setAttribute("controls", "none");
-  undefined.sound.style.display = "none";
-  document.body.appendChild(undefined.sound);
-  undefined.play = function () {
-    this.sound.play();
-  };
-  undefined.stop = function () {
-    this.sound.pause();
-  };
-};
+//not implemented yet
+// const sound = (src) =>{
+//   this.sound = document.createElement("audio");
+//   this.sound.src = src;
+//   this.sound.setAttribute("preload", "auto");
+//   this.sound.setAttribute("controls", "none");
+//   this.sound.style.display = "none";
+//   document.body.appendChild(this.sound);
+//   this.play = function(){
+//     this.sound.play();
+//   };
+//   this.stop = function(){
+//     this.sound.pause();
+//   };
+// };
 
 /***/ }),
 /* 7 */
@@ -742,7 +701,7 @@ var ShipCover = function () {
     this.game = options.game;
     this.color = 'grey';
     this.radius = 40;
-    this.health = 10;
+    this.health = 20;
     this.id = options.id || 1;
   }
 
@@ -761,12 +720,12 @@ var ShipCover = function () {
       var center = Util.distance(this.pos, otherObj.pos);
       return center < this.radius + otherObj.radius;
     }
-  }, {
-    key: "collisionsToRemove",
-    value: function collisionsToRemove(otherObj) {
 
-      this.game.remove(otherObj);
-    }
+    // collisionsToRemove(otherObj) {
+    //
+    //   this.game.remove(otherObj);
+    // }
+
   }]);
 
   return ShipCover;
@@ -843,6 +802,7 @@ var GameView = function () {
       });
     }
 
+    //not implemented yet
     // animate(time) {
     //   const timeDelta = time - this.lastTime;
     //   Game.prototype.step(timeDelta);
@@ -858,8 +818,6 @@ var GameView = function () {
 }();
 
 GameView.MOVES = {
-  // w: [0, -3],
-  // s: [0, 3],
   a: [-5, 0],
   d: [5, 0],
   left: [-5, 0],

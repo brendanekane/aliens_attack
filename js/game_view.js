@@ -47,6 +47,7 @@ class GameView {
     });
   }
 
+  //not implemented yet
   // animate(time) {
   //   const timeDelta = time - this.lastTime;
   //   Game.prototype.step(timeDelta);
@@ -60,8 +61,6 @@ class GameView {
 
 
 GameView.MOVES ={
-  // w: [0, -3],
-  // s: [0, 3],
   a: [-5, 0],
   d: [5, 0],
   left: [-5, 0],

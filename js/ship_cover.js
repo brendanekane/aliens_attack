@@ -6,7 +6,7 @@ class ShipCover{
     this.game = options.game;
     this.color = 'grey';
     this.radius = 40;
-    this.health = 10;
+    this.health = 20;
     this.id = options.id || 1;
   }
 
@@ -29,10 +29,10 @@ class ShipCover{
     return center < (this.radius + otherObj.radius);
   }
 
-  collisionsToRemove(otherObj) {
-
-    this.game.remove(otherObj);
-  }
+  // collisionsToRemove(otherObj) {
+  //
+  //   this.game.remove(otherObj);
+  // }
 }
 
 
