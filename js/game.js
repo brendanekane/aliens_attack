@@ -82,7 +82,6 @@ class Game {
   }
 
   draw(ctx) {
-    debugger
     ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
     const shipImage = document.getElementsByClassName("ship")[0];
     const alienOne = document.getElementsByClassName("alien")[0];
@@ -136,20 +135,46 @@ class Game {
   moveAliens(ctx) {
     let rightBound = false;
     for (let i=0; i < this.aliens.length; i++) {
-      if (this.aliens[i].pos[0] > (Game.DIM_X - 28)) {
-        this.aliens.forEach(alien => {
-          alien.pos[1] += alien.vel[1];
-        });
-        this.rightBound = true;
+      if (this.aliens.length > 20) {
+        if (this.aliens[i].pos[0] > (Game.DIM_X - 28)) {
+          this.aliens.forEach(alien => {
+            alien.vel[0] += .01;
+            // debugger
+            alien.pos[1] += alien.vel[1];
+            // debugger
+          });
+          this.rightBound = true;
+        }
+      } else {
+        if (this.aliens[i].pos[0] > (Game.DIM_X - 28)) {
+          this.aliens.forEach(alien => {
+            alien.vel[0] += .01;
+            alien.vel[1] += .1;
+            alien.pos[1] += alien.vel[1];
+          });
+          this.rightBound = true;
+        }
       }
     }
 
     for (let i=0; i < this.aliens.length; i++) {
-      if (this.aliens[i].pos[0] < 16) {
-        this.aliens.forEach(alien => {
-          alien.pos[1] += alien.vel[1];
-        });
-        this.rightBound = false;
+      if (this.aliens.length > 20) {
+        if (this.aliens[i].pos[0] < 16) {
+          this.aliens.forEach(alien => {
+            alien.vel[0] += .05;
+            alien.pos[1] += alien.vel[1];
+          });
+          this.rightBound = false;
+        }
+      } else {
+        if (this.aliens[i].pos[0] < 16) {
+          this.aliens.forEach(alien => {
+            alien.vel[0] += .01;
+            alien.vel[1] += .1;
+            alien.pos[1] += alien.vel[1];
+          });
+          this.rightBound = false;
+        }
       }
     }
 
@@ -162,6 +187,19 @@ class Game {
         alien.move(ctx);
       });
     }
+    // for (let i=0; i < this.aliens.length; i++) {
+    //   if (this.aliens[i].row === 5 && (this.aliens[i].pos[1] > 212)) {
+    //     this.aliens.forEach(alien => {
+    //       alien.vel[0] += .0001;
+    //       debugger
+    //     });
+    //   }
+    // }
+    // this.aliens.forEach(alien => {
+    //   if (alien.row === 5 && alien.pos[1] > 211) {
+    //     debugger
+    //   }
+    // });
   }
 
   moveBullets(ctx) {
@@ -223,9 +261,24 @@ class Game {
     }
   }
 
-// Game Over
+// Game Over Conditions
+
+  aliensLeft() {
+    let aliensAreLow = false;
+    this.aliens.forEach(alien => {
+      if (alien.pos[1] >= 220) {
+        debugger
+        aliensAreLow = true;
+        debugger
+      }
+
+    });
+    debugger
+    return aliensAreLow;
+  }
 
  gameOver(ctx) {
+
    ctx.font = "50px uni_05_53regular";
    ctx.fillStyle = 'yellow';
    ctx.fillText("Game Over",210,350);
@@ -235,17 +288,19 @@ class Game {
    ctx.font = "50px uni_05_53regular";
    ctx.fillStyle = 'yellow';
    ctx.fillText("You Won!",230,350);
- };
+ }
 
 // invocation of game functions
 
   step(ctx) {
-    debugger
     if (this.shipLives !== 0 && this.aliens.length > 0) {
       this.draw(ctx);
       this.moveObjects(ctx);
       this.checkCollisions();
-    } else if (this.shipLives === 0){
+    } else if (this.shipLives === 0 ){
+      this.gameOver(ctx);
+    } else if (this.aliensLeft()){
+      debugger
       this.gameOver(ctx);
     } else if (this.aliens.length === 0) {
       this.win(ctx);
