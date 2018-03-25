@@ -674,8 +674,8 @@ document.addEventListener("DOMContentLoaded", function () {
   window.canvasEl = canvasEl;
   var game = new Game();
   new GameView(game, ctx).start();
-  new sound("../assets/audio/theme.mp3");
-  debugger;
+  var theme = document.getElementById('theme');
+  theme.play();
 });
 
 var sound = function sound(src) {

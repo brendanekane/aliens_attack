@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.canvasEl = canvasEl;
     const game = new Game();
     new GameView(game, ctx).start();
-    new sound("../assets/audio/theme.mp3")
-    debugger
+    const theme = document.getElementById('theme');
+    theme.play();
 });
 
 
