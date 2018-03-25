@@ -1,4 +1,6 @@
-.canvas-container{
+
+
+.game-container{
   display: flex;
   justify-content: center;
 }
@@ -38,4 +40,51 @@ h1{
 
 body{
   background: #4f4f4f
+}
+
+.left-sidebar-container{
+  border-radius: 25px;
+  box-shadow: 10px 10px 5px grey;
+  font-family: 'uni_05_53regular';
+  font-size: 20px;
+  background: #cc9659;
+  width: 25%;
+  margin-right: 20px;
+}
+
+.right-sidebar-container{
+  border-radius: 25px;
+  box-shadow: 10px 10px 5px grey;
+  font-family: 'uni_05_53regular';
+  font-size: 20px;
+  background: #cc9659;
+  width: 25%;
+  margin-left: 20px;
+}
+
+.controls-container{
+  line-height: .5;
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.links-container{
+  line-height: .5;
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.about-me{
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+  line-height: 1;
+}
+
+.links{
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
 }
