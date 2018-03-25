@@ -6,13 +6,32 @@
 #game-canvas{
   border-radius: 25px;
   box-shadow: 10px 10px 5px grey;
+  font-family: 'uni_05_53regular'
+
 }
 
 #star-canvas{
   border-radius: 25px;
+  font-family: 'uni_05_53regular'
 }
 
 h1{
+  font-family: 'uni_05_53regular';
+  font-size: 50px;
   display: flex;
   justify-content: center;
+}
+
+.load-font{
+  font-family: 'uni_05_53regular';
+  visibility: hidden;
+}
+
+@font-face {
+    font-family: 'uni_05_53regular';
+    src: url('uni0553-webfont-webfont.woff2') format('woff2'),
+         url('uni0553-webfont-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
 }

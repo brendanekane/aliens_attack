@@ -6,7 +6,7 @@ class ShipCover{
     this.game = options.game;
     this.color = 'grey';
     this.radius = 40;
-    this.health = 20;
+    this.health = 10;
     this.id = options.id || 1;
   }
 

@@ -95,7 +95,6 @@ class Game {
     const coverTwo = document.getElementsByClassName("cover")[1];
     const coverThree = document.getElementsByClassName("cover")[2];
     const coverFour = document.getElementsByClassName("cover")[3];
-    // debugger
     this.allObjects(ctx).forEach(object => {
       if (object instanceof Ship) {
         ctx.drawImage(shipImage, (object.pos[0]-15), object.pos[1], 40, 40);
@@ -146,13 +145,13 @@ class Game {
         this.rightBound = false;
       }
     }
+
     if (this.rightBound) {
       this.aliens.forEach(alien => {
         alien.reverse(ctx);
       });
     } else {
       this.aliens.forEach(alien => {
-
         alien.move(ctx);
       });
     }
@@ -196,18 +195,13 @@ class Game {
           if (obj1.health === 0) {
             this.remove(obj1);
           } else if (obj2.health === 0) {
-            this.remove(obj2)
+            this.remove(obj2);
           }
         }
-        // if (obj1.health <= 0 && obj2.health <= 0) {
-        //   const collision = obj1.collisionsToRemove(obj2);
-        // }
       }
     }
 
   }
-
-
 
   remove(object) {
     if (object instanceof Bullet) {
@@ -222,31 +216,34 @@ class Game {
     }
   }
 
-
 // Game Over
 
  gameOver(ctx) {
-   debugger
-   ctx.font = "30px Arial";
-   ctx.fillStyle = 'yellow'
-   ctx.fillText("Game Over",275,350);
+   ctx.font = "50px uni_05_53regular";
+   ctx.fillStyle = 'yellow';
+   ctx.fillText("Game Over",210,350);
  }
+
+ win(ctx) {
+   ctx.font = "50px uni_05_53regular";
+   ctx.fillStyle = 'yellow';
+   ctx.fillText("You Won!",230,350);
+ };
 
 // invocation of game functions
 
   step(ctx) {
-    if (shipLives !== 0) {
+    if (shipLives !== 0 && this.aliens.length > 0) {
       this.draw(ctx);
       this.moveObjects(ctx);
       this.checkCollisions();
     } else if (shipLives === 0){
       this.gameOver(ctx);
+    } else if (this.aliens.length === 0) {
+      this.win(ctx);
     }
     this.createNewShip();
   }
-
-
-
 }
 
 Game.DIM_X = 700;

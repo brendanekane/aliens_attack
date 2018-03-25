@@ -13,7 +13,7 @@ class Ship extends MovingObject {
     options.radius = SHIPDEFAULT.radius;
     options.vel = SHIPDEFAULT.vel;
     super(options);
-    this.health = 5;
+    this.health = 1;
   }
 
   power(impulse) {
