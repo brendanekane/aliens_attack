@@ -28,6 +28,7 @@ class Game {
 
   createNewShip() {
     if (this.ship.length === 0 && this.shipLives > 0) {
+      debugger
       const ship = new Ship({pos: [350, 640], game: this});
       this.ship.push(ship);
       return ship;
@@ -283,11 +284,11 @@ class Game {
 // invocation of game functions
 
   step(ctx) {
-    if (this.shipLives !== 0 && this.aliens.length > 0) {
+    if (this.shipLives > 0 && this.aliens.length > 0) {
       this.draw(ctx);
       this.moveObjects(ctx);
       this.checkCollisions();
-    } else if (this.shipLives === 0 ){
+    } else if (this.shipLives <= 0 ){
       this.gameOver(ctx);
     } else if (this.aliens.length === 0) {
       this.win(ctx);

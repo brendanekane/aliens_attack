@@ -26,10 +26,9 @@ class GameView {
     // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
     // this.lastTime = 0;
     // requestAnimationFrame(this.animate.bind(this));
-    setInterval(Game.prototype.alienShoot.bind(this.game), 1500);
+    setInterval(Game.prototype.alienShoot.bind(this.game), 1000);
     this.bindKeys();
     this.sf().start();
-
   }
 
   bindShip() {
