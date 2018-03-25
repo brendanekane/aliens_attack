@@ -233,6 +233,14 @@ class Game {
 
   }
 
+  removeBullets() {
+    this.bullets.forEach(bullet => {
+      if (bullet.pos[1] > 700 || bullet.pos[1] < 0) {
+        this.remove(bullet);
+      }
+    });
+  }
+
   remove(object) {
     if (object instanceof Bullet) {
       this.bullets.splice(this.bullets.indexOf(object), 1);
@@ -268,6 +276,7 @@ class Game {
       this.draw(ctx);
       this.moveObjects(ctx);
       this.checkCollisions();
+      this.removeBullets();
     } else if (this.shipLives <= 0 ){
       this.gameOver(ctx);
     } else if (this.aliens.length === 0) {

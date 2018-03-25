@@ -459,6 +459,17 @@ var Game = function () {
       }
     }
   }, {
+    key: "removeBullets",
+    value: function removeBullets() {
+      var _this = this;
+
+      this.bullets.forEach(function (bullet) {
+        if (bullet.pos[1] > 700 || bullet.pos[1] < 0) {
+          _this.remove(bullet);
+        }
+      });
+    }
+  }, {
     key: "remove",
     value: function remove(object) {
       if (object instanceof Bullet) {
@@ -500,6 +511,7 @@ var Game = function () {
         this.draw(ctx);
         this.moveObjects(ctx);
         this.checkCollisions();
+        this.removeBullets();
       } else if (this.shipLives <= 0) {
         this.gameOver(ctx);
       } else if (this.aliens.length === 0) {
