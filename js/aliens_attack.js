@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const game = new Game();
     new GameView(game, ctx).start();
     const theme = document.getElementById('theme');
+    theme.loop = true;
     theme.play();
 });
 

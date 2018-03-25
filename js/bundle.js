@@ -461,14 +461,37 @@ var Game = function () {
             continue;
           } else if (obj1 instanceof Alien && obj2 instanceof Ship && obj1.collidedWith(obj2)) {
             this.shipLives = 0;
-          } else if (obj1.collidedWith(obj2)) {
-            obj1.health -= 1;
-            if (obj1.health === 0) {
-              this.remove(obj1);
-            } else if (obj2.health === 0) {
-              this.remove(obj2);
-            }
           }
+
+          //this randomly deletes some aliens once they reach a certain y position?
+          // else if (obj1.collidedWith(obj2) && ((obj1 instanceof Alien && obj2.alienBullet === false) || obj2 instanceof Alien && obj1.alienBullet === false)) {
+          //   debugger
+          //   obj2.health -= 1;
+          //   if (obj1.health === 0) {
+          //     this.remove(obj1);
+          //     debugger
+          //   } else if (obj2.health === 0) {
+          //     debugger
+          //     this.remove(obj2);
+          //     debugger
+          //   }
+          // }
+
+          // obj1.health -= 1 will make it so anytime a bullet hits a cover every bullet gets removed
+          // obj2.health -= 1 will randomly delete a bunch of aliens once they reach a certain y position,
+          // but only if you have killed a certain amount of aliens. I haven't figured out the number yet
+          else if (obj1.collidedWith(obj2)) {
+              debugger;
+              obj2.health -= 1;
+              if (obj1.health <= 0) {
+                this.remove(obj1);
+                debugger;
+              } else if (obj2.health <= 0) {
+                debugger;
+                this.remove(obj2);
+                debugger;
+              }
+            }
         }
       }
     }
@@ -476,7 +499,9 @@ var Game = function () {
     key: "remove",
     value: function remove(object) {
       if (object instanceof Bullet) {
+        debugger;
         this.bullets.splice(this.bullets.indexOf(object), 1);
+        debugger;
       } else if (object instanceof Alien) {
         this.aliens.splice(this.aliens.indexOf(object), 1);
       } else if (object instanceof Ship) {
@@ -675,6 +700,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var game = new Game();
   new GameView(game, ctx).start();
   var theme = document.getElementById('theme');
+  theme.loop = true;
   theme.play();
 });
 
@@ -792,7 +818,7 @@ var GameView = function () {
       // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
       // this.lastTime = 0;
       // requestAnimationFrame(this.animate.bind(this));
-      setInterval(Game.prototype.alienShoot.bind(this.game), 1000);
+      setInterval(Game.prototype.alienShoot.bind(this.game), 500);
       this.bindKeys();
       this.sf().start();
     }
