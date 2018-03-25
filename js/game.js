@@ -3,7 +3,6 @@ const Ship = require("./ship.js");
 const Util = require("./util.js");
 const Bullet = require("./bullet.js");
 const ShipCover = require("./ship_cover.js");
-let shipLives = 4;
 
 class Game {
   constructor(game) {
@@ -15,7 +14,7 @@ class Game {
     this.game = game;
     this.cover = [];
     this.addCover();
-
+    this.shipLives = 4;
   }
 
 
@@ -28,7 +27,7 @@ class Game {
   }
 
   createNewShip() {
-    if (this.ship.length === 0 && shipLives > 0) {
+    if (this.ship.length === 0 && this.shipLives > 0) {
       const ship = new Ship({pos: [350, 640], game: this});
       this.ship.push(ship);
       return ship;
@@ -66,7 +65,7 @@ class Game {
   }
 
   alienShoot(){
-    if (shipLives !== 0) {
+    if (this.shipLives !== 0) {
       const aliens = this.aliens;
       const alien = aliens[Math.floor((Math.random() * aliens.length))];
       const alienPos = alien.pos.slice(0);
@@ -83,6 +82,7 @@ class Game {
   }
 
   draw(ctx) {
+    debugger
     ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
     const shipImage = document.getElementsByClassName("ship")[0];
     const alienOne = document.getElementsByClassName("alien")[0];
@@ -123,6 +123,12 @@ class Game {
         ctx.drawImage(coverFour, (object.pos[0] - 38), object.pos[1] - 20, 80, 80);
       }
     });
+    ctx.font = "20px uni_05_53regular";
+    ctx.fillStyle = 'yellow';
+    ctx.fillText(`Lives: ${this.shipLives - 1}`,600,45);
+    ctx.font = "20px uni_05_53regular";
+    ctx.fillStyle = 'yellow';
+    ctx.fillText(`Health: ${this.ship[0].health / 5 * 100}%`,550,25);
   }
 
 // Object movements
@@ -211,7 +217,7 @@ class Game {
       this.aliens.splice(this.aliens.indexOf(object), 1);
     } else if (object instanceof Ship) {
       this.ship.splice(this.ship.indexOf(object), 1);
-      shipLives -= 1;
+      this.shipLives -= 1;
     } else if (object instanceof ShipCover) {
       this.cover.splice(this.cover.indexOf(object), 1);
     }
@@ -234,11 +240,12 @@ class Game {
 // invocation of game functions
 
   step(ctx) {
-    if (shipLives !== 0 && this.aliens.length > 0) {
+    debugger
+    if (this.shipLives !== 0 && this.aliens.length > 0) {
       this.draw(ctx);
       this.moveObjects(ctx);
       this.checkCollisions();
-    } else if (shipLives === 0){
+    } else if (this.shipLives === 0){
       this.gameOver(ctx);
     } else if (this.aliens.length === 0) {
       this.win(ctx);
