@@ -668,7 +668,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var canvasEl = document.getElementsByTagName("canvas")[0];
   var ctx = canvasEl.getContext("2d");
   var game = new Game();
-  debugger;
   new WelcomeView(ctx).start();
   var welcome = document.getElementById('welcome');
   welcome.loop = true;
@@ -683,6 +682,7 @@ document.getElementById("start-Btn").addEventListener("click", function () {
   var view = new GameView(game, ctx);
   view.start();
   var theme = document.getElementById('theme');
+  theme.muted = false;
   theme.loop = true;
   theme.play();
 });

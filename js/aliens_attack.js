@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementsByTagName("canvas")[0];
     const ctx = canvasEl.getContext("2d");
     const game = new Game();
-    debugger
     new WelcomeView(ctx).start();
     const welcome = document.getElementById('welcome');
     welcome.loop = true;
@@ -23,6 +22,7 @@ document.getElementById("start-Btn").addEventListener("click", () =>{
   const view = new GameView(game, ctx);
   view.start();
   const theme = document.getElementById('theme');
+  theme.muted = false;
   theme.loop = true;
   theme.play();
 });
