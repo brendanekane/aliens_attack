@@ -357,19 +357,21 @@ var Game = function () {
       for (var i = 0; i < this.aliens.length; i++) {
         if (this.aliens.length > 20 && this.aliens[i].pos[0] > Game.DIM_X - 28) {
           this.aliens.forEach(function (alien) {
-            alien.vel[0] += .01;
+            if (alien.vel[0] < 7.5) {
+              alien.vel[0] += .02;
+            }
             alien.pos[1] += alien.vel[1];
           });
           this.rightBound = true;
-        } else {
-          if (this.aliens[i].pos[0] > Game.DIM_X - 28) {
-            this.aliens.forEach(function (alien) {
-              alien.vel[0] += .01;
-              alien.vel[1] += .1;
-              alien.pos[1] += alien.vel[1];
-            });
-            this.rightBound = true;
-          }
+        } else if (this.aliens[i].pos[0] > Game.DIM_X - 28) {
+          this.aliens.forEach(function (alien) {
+            if (alien.vel[0] < 7.5) {
+              alien.vel[0] += .02;
+            }
+            alien.vel[1] += .1;
+            alien.pos[1] += alien.vel[1];
+          });
+          this.rightBound = true;
         }
       }
 
@@ -378,14 +380,18 @@ var Game = function () {
       for (var _i = 0; _i < this.aliens.length; _i++) {
         if (this.aliens.length > 20 && this.aliens[_i].pos[0] < 16) {
           this.aliens.forEach(function (alien) {
-            alien.vel[0] += .05;
+            if (alien.vel[0] < 7.5) {
+              alien.vel[0] += .02;
+            }
             alien.pos[1] += alien.vel[1];
           });
           this.rightBound = false;
         } else {
           if (this.aliens[_i].pos[0] < 16) {
             this.aliens.forEach(function (alien) {
-              alien.vel[0] += .01;
+              if (alien.vel[0] < 7.5) {
+                alien.vel[0] += .02;
+              }
               alien.vel[1] += .1;
               alien.pos[1] += alien.vel[1];
             });
@@ -500,6 +506,17 @@ var Game = function () {
       ctx.fillStyle = 'yellow';
       ctx.fillText("You Won!", 230, 350);
     }
+  }, {
+    key: "alienWinEdge",
+    value: function alienWinEdge() {
+      var _this2 = this;
+
+      this.aliens.forEach(function (alien) {
+        if (alien.pos[1] > 700 || alien.pos[1] < 0) {
+          _this2.shipLives = 0;
+        }
+      });
+    }
 
     // invocation of game functions
 
@@ -511,6 +528,7 @@ var Game = function () {
         this.moveObjects(ctx);
         this.checkCollisions();
         this.removeBullets();
+        this.alienWinEdge();
       } else if (this.shipLives <= 0) {
         this.gameOver(ctx);
       } else if (this.aliens.length === 0) {
@@ -561,7 +579,7 @@ var Alien = function (_MovingObject) {
 
     options.color = ALIENDEFAULT.color;
     options.radius = ALIENDEFAULT.radius;
-    options.vel = [2, 1];
+    options.vel = [2, .5];
 
     var _this = _possibleConstructorReturn(this, (Alien.__proto__ || Object.getPrototypeOf(Alien)).call(this, options));
 
@@ -833,7 +851,7 @@ var GameView = function () {
           _this.bindShip().shoot();
           setTimeout(function () {
             delayShot = true;
-          }, 200);
+          }, 250);
         }
       });
     }

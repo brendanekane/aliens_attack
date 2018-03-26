@@ -136,21 +136,24 @@ class Game {
     // change y position
     for (let i=0; i < this.aliens.length; i++) {
       if ((this.aliens.length > 20) && (this.aliens[i].pos[0] > (Game.DIM_X - 28))) {
-          this.aliens.forEach(alien => {
-            alien.vel[0] += .01;
-            alien.pos[1] += alien.vel[1];
-          });
-          this.rightBound = true;
-      } else {
-        if (this.aliens[i].pos[0] > (Game.DIM_X - 28)) {
-          this.aliens.forEach(alien => {
-            alien.vel[0] += .01;
-            alien.vel[1] += .1;
-            alien.pos[1] += alien.vel[1];
-          });
-          this.rightBound = true;
-        }
+        this.aliens.forEach(alien => {
+          if (alien.vel[0] < 7.5) {
+            alien.vel[0] += .02;
+          }
+          alien.pos[1] += alien.vel[1];
+        });
+        this.rightBound = true;
+      } else if ((this.aliens[i].pos[0] > (Game.DIM_X - 28))) {
+        this.aliens.forEach(alien => {
+          if (alien.vel[0] < 7.5) {
+            alien.vel[0] += .02;
+          }
+          alien.vel[1] += .1;
+          alien.pos[1] += alien.vel[1];
+        });
+        this.rightBound = true;
       }
+
     }
 
     //check if left bound of canvas is next move, speed of velocity,
@@ -158,7 +161,9 @@ class Game {
     for (let i=0; i < this.aliens.length; i++) {
       if ((this.aliens.length > 20) && (this.aliens[i].pos[0] < 16)) {
           this.aliens.forEach(alien => {
-            alien.vel[0] += .05;
+            if (alien.vel[0] < 7.5) {
+              alien.vel[0] += .02;
+            }
             alien.pos[1] += alien.vel[1];
           });
           this.rightBound = false;
@@ -166,7 +171,9 @@ class Game {
       } else {
         if (this.aliens[i].pos[0] < 16) {
           this.aliens.forEach(alien => {
-            alien.vel[0] += .01;
+            if (alien.vel[0] < 7.5) {
+              alien.vel[0] += .02;
+            }
             alien.vel[1] += .1;
             alien.pos[1] += alien.vel[1];
           });
@@ -268,6 +275,14 @@ class Game {
     ctx.fillText("You Won!",230,350);
   }
 
+  alienWinEdge() {
+    this.aliens.forEach(alien => {
+      if (alien.pos[1] > 700 || alien.pos[1] < 0) {
+        this.shipLives = 0;
+      }
+    });
+  }
+
 // invocation of game functions
 
   step(ctx) {
@@ -276,6 +291,7 @@ class Game {
       this.moveObjects(ctx);
       this.checkCollisions();
       this.removeBullets();
+      this.alienWinEdge();
     } else if (this.shipLives <= 0 ){
       this.gameOver(ctx);
     } else if (this.aliens.length === 0) {
