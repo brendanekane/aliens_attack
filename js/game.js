@@ -256,20 +256,17 @@ class Game {
 
 // Game Over Conditions
 
- gameOver(ctx) {
+  gameOver(ctx) {
+    ctx.font = "50px uni_05_53regular";
+    ctx.fillStyle = 'yellow';
+    ctx.fillText("Game Over",210,350);
+  }
 
-   ctx.font = "50px uni_05_53regular";
-   ctx.fillStyle = 'yellow';
-   ctx.fillText("Game Over",210,350);
- }
-
- win(ctx) {
-   ctx.font = "50px uni_05_53regular";
-   ctx.fillStyle = 'yellow';
-   ctx.fillText("You Won!",230,350);
- }
-
-
+  win(ctx) {
+    ctx.font = "50px uni_05_53regular";
+    ctx.fillStyle = 'yellow';
+    ctx.fillText("You Won!",230,350);
+  }
 
 // invocation of game functions
 

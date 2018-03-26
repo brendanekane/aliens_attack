@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementsByTagName("canvas")[0];
     const ctx = canvasEl.getContext("2d");
     const game = new Game();
+    debugger
     new WelcomeView(ctx).start();
     const welcome = document.getElementById('welcome');
     welcome.loop = true;
@@ -19,13 +20,18 @@ document.getElementById("start-Btn").addEventListener("click", () =>{
   const canvasEl = document.getElementsByTagName("canvas")[0];
   const ctx = canvasEl.getContext("2d");
   const game = new Game();
-  const gameViewNew = new GameView(game, ctx)
-  gameViewNew.start();
-  debugger
+  const view = new GameView(game, ctx);
+  view.start();
   const theme = document.getElementById('theme');
   theme.loop = true;
   theme.play();
 });
+
+document.getElementById('mute-Btn').addEventListener("click", () => {
+  welcome.muted = !welcome.muted;
+  theme.muted = !theme.muted;
+});
+
 
 //not implemented yet
 // const sound = (src) =>{

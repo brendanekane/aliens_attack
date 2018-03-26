@@ -489,7 +489,6 @@ var Game = function () {
   }, {
     key: "gameOver",
     value: function gameOver(ctx) {
-
       ctx.font = "50px uni_05_53regular";
       ctx.fillStyle = 'yellow';
       ctx.fillText("Game Over", 210, 350);
@@ -669,6 +668,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var canvasEl = document.getElementsByTagName("canvas")[0];
   var ctx = canvasEl.getContext("2d");
   var game = new Game();
+  debugger;
   new WelcomeView(ctx).start();
   var welcome = document.getElementById('welcome');
   welcome.loop = true;
@@ -680,12 +680,16 @@ document.getElementById("start-Btn").addEventListener("click", function () {
   var canvasEl = document.getElementsByTagName("canvas")[0];
   var ctx = canvasEl.getContext("2d");
   var game = new Game();
-  var gameViewNew = new GameView(game, ctx);
-  gameViewNew.start();
-  debugger;
+  var view = new GameView(game, ctx);
+  view.start();
   var theme = document.getElementById('theme');
   theme.loop = true;
   theme.play();
+});
+
+document.getElementById('mute-Btn').addEventListener("click", function () {
+  welcome.muted = !welcome.muted;
+  theme.muted = !theme.muted;
 });
 
 //not implemented yet
