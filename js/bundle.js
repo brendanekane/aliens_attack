@@ -662,18 +662,30 @@ module.exports = Ship;
 
 var Game = __webpack_require__(3);
 var GameView = __webpack_require__(8);
+var WelcomeView = __webpack_require__(10);
 var gameTheme = void 0;
 
 document.addEventListener("DOMContentLoaded", function () {
-    var canvasEl = document.getElementsByTagName("canvas")[0];
-    var ctx = canvasEl.getContext("2d");
-    window.ctx = ctx;
-    window.canvasEl = canvasEl;
-    var game = new Game();
-    new GameView(game, ctx).start();
-    var theme = document.getElementById('theme');
-    theme.loop = true;
-    theme.play();
+  var canvasEl = document.getElementsByTagName("canvas")[0];
+  var ctx = canvasEl.getContext("2d");
+  var game = new Game();
+  new WelcomeView(ctx).start();
+  var welcome = document.getElementById('welcome');
+  welcome.loop = true;
+  welcome.play();
+});
+
+document.getElementById("start-Btn").addEventListener("click", function () {
+  welcome.pause();
+  var canvasEl = document.getElementsByTagName("canvas")[0];
+  var ctx = canvasEl.getContext("2d");
+  var game = new Game();
+  var gameViewNew = new GameView(game, ctx);
+  gameViewNew.start();
+  debugger;
+  var theme = document.getElementById('theme');
+  theme.loop = true;
+  theme.play();
 });
 
 //not implemented yet
@@ -785,6 +797,7 @@ var GameView = function () {
   }, {
     key: "start",
     value: function start() {
+      debugger;
       setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
       // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
       // this.lastTime = 0;
@@ -831,6 +844,12 @@ var GameView = function () {
     //   requestAnimationFrame(this.animate.bind(this));
     // }
 
+  }, {
+    key: "replay",
+    value: function replay(ctx) {
+      var newGame = new Game();
+      this.game = newGame;
+    }
   }]);
 
   return GameView;
@@ -1009,6 +1028,111 @@ Starfield.prototype.start = function() {
 return Starfield
 
 })
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Starfield = __webpack_require__(9);
+
+var WelcomeView = function () {
+  function WelcomeView(ctx) {
+    _classCallCheck(this, WelcomeView);
+
+    this.ctx = ctx;
+  }
+
+  _createClass(WelcomeView, [{
+    key: 'sf',
+    value: function sf() {
+
+      return new Starfield({
+        canvas: '#star-canvas',
+        numStars: 800,
+        dx: 0.05,
+        dy: 0.025,
+        maxRadius: 2,
+        shootingStarInterval: 5
+      });
+    }
+  }, {
+    key: 'start',
+    value: function start() {
+      setInterval(this.step(this.ctx), 20);
+      this.sf().start();
+    }
+  }, {
+    key: 'step',
+    value: function step(ctx) {
+      // this.drawWelcome(ctx)
+      setTimeout(this.drawWelcome, 500, ctx);
+      setTimeout(this.drawFirstLine, 2000, ctx);
+      setTimeout(this.drawSecondLine, 4000, ctx);
+      setTimeout(this.drawThirdLine, 6000, ctx);
+      setTimeout(this.drawFourthLine, 8000, ctx);
+    }
+  }, {
+    key: 'drawWelcome',
+    value: function drawWelcome(ctx) {
+      ctx.clearRect(0, 0, WelcomeView.DIM_X, WelcomeView.DIM_Y);
+      ctx.font = "50px uni_05_53regular";
+      ctx.fillStyle = 'yellow';
+      ctx.fillText("Aliens Attack!", 190, 200);
+      // setTimeout(this.drawInfo, 200, ctx);
+    }
+  }, {
+    key: 'drawFirstLine',
+    value: function drawFirstLine(ctx) {
+      ctx.font = "30px uni_05_53regular";
+      ctx.fillStyle = 'yellow';
+      ctx.fillText("The aliens have invaded! You are", 110, 300);
+    }
+  }, {
+    key: 'drawSecondLine',
+    value: function drawSecondLine(ctx) {
+      ctx.font = "30px uni_05_53regular";
+      ctx.fillStyle = 'yellow';
+      ctx.fillText("no match for their superior technology", 50, 350);
+    }
+  }, {
+    key: 'drawThirdLine',
+    value: function drawThirdLine(ctx) {
+      ctx.font = "30px uni_05_53regular";
+      ctx.fillStyle = 'yellow';
+      ctx.fillText("and smooth animation!", 185, 400);
+    }
+  }, {
+    key: 'drawFourthLine',
+    value: function drawFourthLine(ctx) {
+      ctx.font = "30px uni_05_53regular";
+      ctx.fillStyle = 'yellow';
+      ctx.fillText("Press the button on the left to start", 70, 450);
+    }
+  }, {
+    key: 'wait',
+    value: function wait(ms) {
+      var start = new Date().getTime();
+      var end = start;
+      while (end < start + ms) {
+        end = new Date().getTime();
+      }
+    }
+  }]);
+
+  return WelcomeView;
+}();
+
+WelcomeView.DIM_X = 700;
+WelcomeView.DIM_Y = 700;
+
+module.exports = WelcomeView;
 
 /***/ })
 /******/ ]);

@@ -269,6 +269,8 @@ class Game {
    ctx.fillText("You Won!",230,350);
  }
 
+
+
 // invocation of game functions
 
   step(ctx) {

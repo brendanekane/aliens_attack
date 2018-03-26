@@ -22,6 +22,7 @@ class GameView {
   }
 
   start() {
+    debugger
     setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
     // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
     // this.lastTime = 0;
@@ -61,6 +62,12 @@ class GameView {
   //
   //   requestAnimationFrame(this.animate.bind(this));
   // }
+
+  replay(ctx) {
+    const newGame = new Game();
+    this.game = newGame;
+
+  }
 
 }
 
