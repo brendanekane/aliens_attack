@@ -562,7 +562,7 @@ var Alien = function (_MovingObject) {
 
     options.color = ALIENDEFAULT.color;
     options.radius = ALIENDEFAULT.radius;
-    options.vel = [1, 1];
+    options.vel = [2, 1];
 
     var _this = _possibleConstructorReturn(this, (Alien.__proto__ || Object.getPrototypeOf(Alien)).call(this, options));
 
@@ -789,7 +789,7 @@ var GameView = function () {
       // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
       // this.lastTime = 0;
       // requestAnimationFrame(this.animate.bind(this));
-      setInterval(Game.prototype.alienShoot.bind(this.game), 500);
+      setInterval(Game.prototype.alienShoot.bind(this.game), 200);
       this.bindKeys();
       this.sf().start();
     }
@@ -809,8 +809,15 @@ var GameView = function () {
           _this.bindShip().power(GameView.MOVES[k]);
         });
       });
-      key('f', function () {
-        _this.bindShip().shoot();
+      var delayShot = true;
+      key('w', function () {
+        if (delayShot) {
+          delayShot = false;
+          _this.bindShip().shoot();
+          setTimeout(function () {
+            delayShot = true;
+          }, 200);
+        }
       });
     }
 

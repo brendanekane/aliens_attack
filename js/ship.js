@@ -31,6 +31,7 @@ class Ship extends MovingObject {
     const bullet = new Bullet({pos: bulletPos, game: this.game});
     this.game.pushBullet(bullet);
   }
+
 }
 
 module.exports = Ship;
