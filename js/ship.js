@@ -3,7 +3,7 @@ const Bullet = require("./bullet.js");
 
 const SHIPDEFAULT = {
   color: 'black',
-  radius: 18,
+  radius: 20,
   vel: 0
 };
 

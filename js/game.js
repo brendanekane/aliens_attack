@@ -94,7 +94,7 @@ class Game {
     const coverFour = document.getElementsByClassName("cover")[3];
     this.allObjects(ctx).forEach(object => {
       if (object instanceof Ship) {
-        ctx.drawImage(shipImage, (object.pos[0]-15), object.pos[1], 40, 40);
+        ctx.drawImage(shipImage, (object.pos[0]-22), (object.pos[1]-10), 50, 60);
       } else if (object instanceof Alien && object.row === 1) {
         ctx.drawImage(alienOne, (object.pos[0]-15), object.pos[1], 40, 40);
       } else if (object instanceof Alien && object.row === 2) {

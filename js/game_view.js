@@ -48,7 +48,7 @@ class GameView {
       if (delayShot) {
         delayShot = false;
         this.bindShip().shoot();
-        setTimeout(function() { delayShot = true; }, 250);
+        setTimeout(function() { delayShot = true; }, 200);
       }
     });
   }

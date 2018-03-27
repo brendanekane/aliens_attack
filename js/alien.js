@@ -2,7 +2,7 @@ const MovingObject = require("./moving_object.js");
 const Bullet = require("./bullet.js");
 const ALIENDEFAULT = {
   color: 'red',
-  radius: 20
+  radius: 18
 };
 
 class Alien extends MovingObject {

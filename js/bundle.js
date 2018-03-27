@@ -312,7 +312,7 @@ var Game = function () {
       var coverFour = document.getElementsByClassName("cover")[3];
       this.allObjects(ctx).forEach(function (object) {
         if (object instanceof Ship) {
-          ctx.drawImage(shipImage, object.pos[0] - 15, object.pos[1], 40, 40);
+          ctx.drawImage(shipImage, object.pos[0] - 22, object.pos[1] - 10, 50, 60);
         } else if (object instanceof Alien && object.row === 1) {
           ctx.drawImage(alienOne, object.pos[0] - 15, object.pos[1], 40, 40);
         } else if (object instanceof Alien && object.row === 2) {
@@ -566,7 +566,7 @@ var MovingObject = __webpack_require__(0);
 var Bullet = __webpack_require__(2);
 var ALIENDEFAULT = {
   color: 'red',
-  radius: 20
+  radius: 18
 };
 
 var Alien = function (_MovingObject) {
@@ -623,7 +623,7 @@ var Bullet = __webpack_require__(2);
 
 var SHIPDEFAULT = {
   color: 'black',
-  radius: 18,
+  radius: 20,
   vel: 0
 };
 
@@ -851,7 +851,7 @@ var GameView = function () {
           _this.bindShip().shoot();
           setTimeout(function () {
             delayShot = true;
-          }, 250);
+          }, 200);
         }
       });
     }
