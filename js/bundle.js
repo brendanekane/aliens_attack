@@ -288,6 +288,10 @@ var Game = function () {
     key: "pushBullet",
     value: function pushBullet(bullet) {
       this.bullets.push(bullet);
+      if (bullet.alienBullet === false) {
+        var alienBulletSound = document.getElementById('alienBullet');
+        alienBulletSound.play();
+      }
     }
   }, {
     key: "allObjects",
@@ -458,6 +462,16 @@ var Game = function () {
           } else if (obj1.collidedWith(obj2)) {
             obj2.health -= 1;
             if (obj2.health <= 0) {
+              if (obj2 instanceof Alien) {
+                var alienExplosion = document.getElementById('alienExplosion');
+                alienExplosion.play();
+              } else if (obj2 instanceof ShipCover) {
+                var coverExplosion = document.getElementById('coverExplosion');
+                coverExplosion.play();
+              } else if (obj2 instanceof Ship) {
+                var loseLife = document.getElementById('loseLife');
+                loseLife.play();
+              }
               this.remove(obj2);
             }
           }
@@ -585,7 +599,6 @@ var Alien = function (_MovingObject) {
 
     _this.health = options.health || 1;
     _this.row = options.row || 1;
-
     return _this;
   }
 
@@ -706,8 +719,11 @@ document.getElementById("start-Btn").addEventListener("click", function () {
 });
 
 document.getElementById('mute-Btn').addEventListener("click", function () {
-  welcome.muted = !welcome.muted;
-  theme.muted = !theme.muted;
+  var audioTags = document.getElementsByTagName("audio");
+  var audioArr = [].slice.call(audioTags);
+  audioArr.forEach(function (audio) {
+    audio.muted = !audio.muted;
+  });
 });
 
 //not implemented yet
@@ -819,7 +835,6 @@ var GameView = function () {
   }, {
     key: "start",
     value: function start() {
-      debugger;
       setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
       // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
       // this.lastTime = 0;
@@ -844,7 +859,9 @@ var GameView = function () {
           _this.bindShip().power(GameView.MOVES[k]);
         });
       });
+
       var delayShot = true;
+
       key('w', function () {
         if (delayShot) {
           delayShot = false;
@@ -854,6 +871,25 @@ var GameView = function () {
           }, 200);
         }
       });
+
+      // key('w+a', () =>{
+      //   if (delayShot) {
+      //     debugger
+      //     delayShot = false;
+      //     this.bindShip().power(GameView.MOVES[a]);
+      //     this.bindShip().shoot();
+      //     setTimeout(function() { delayShot = true; }, 200);
+      //   }
+      // });
+
+      // key('w+d', () =>{
+      //   if (delayShot) {
+      //     delayShot = false;
+      //     this.bindShip().power(GameView.MOVES[d]);
+      //     this.bindShip().shoot();
+      //     setTimeout(function() { delayShot = true; }, 200);
+      //   }
+      // });
     }
 
     //not implemented yet
@@ -878,10 +914,10 @@ var GameView = function () {
 }();
 
 GameView.MOVES = {
-  a: [-5, 0],
-  d: [5, 0],
-  left: [-5, 0],
-  right: [5, 0]
+  a: [-7, 0],
+  d: [7, 0],
+  left: [-7, 0],
+  right: [7, 0]
 };
 module.exports = GameView;
 

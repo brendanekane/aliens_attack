@@ -28,8 +28,11 @@ document.getElementById("start-Btn").addEventListener("click", () =>{
 });
 
 document.getElementById('mute-Btn').addEventListener("click", () => {
-  welcome.muted = !welcome.muted;
-  theme.muted = !theme.muted;
+  const audioTags = document.getElementsByTagName("audio");
+  const audioArr = [].slice.call(audioTags);
+  audioArr.forEach(audio => {
+    audio.muted = !audio.muted;
+  });
 });
 
 

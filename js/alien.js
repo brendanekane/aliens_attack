@@ -13,13 +13,13 @@ class Alien extends MovingObject {
     super(options);
     this.health = options.health || 1;
     this.row = options.row || 1;
-
   }
 
   shoot(pos) {
     const alienBulletPos = pos;
     const alienBullet = new Bullet({pos: alienBulletPos, game: this.game, color: 'orange', alienBullet: true});
     this.game.pushBullet(alienBullet);
+
   }
 }
 

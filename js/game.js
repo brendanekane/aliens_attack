@@ -72,6 +72,10 @@ class Game {
 
   pushBullet(bullet) {
     this.bullets.push(bullet);
+    if (bullet.alienBullet === false) {
+      const alienBulletSound = document.getElementById('alienBullet');
+      alienBulletSound.play();
+    }
   }
 
   allObjects(ctx) {
@@ -232,6 +236,16 @@ class Game {
         else if (obj1.collidedWith(obj2)) {
           obj2.health -= 1;
           if (obj2.health <= 0) {
+            if (obj2 instanceof Alien) {
+              const alienExplosion = document.getElementById('alienExplosion');
+              alienExplosion.play();
+            } else if (obj2 instanceof ShipCover) {
+              const coverExplosion = document.getElementById('coverExplosion');
+              coverExplosion.play()
+            } else if (obj2 instanceof Ship) {
+              const loseLife = document.getElementById('loseLife');
+              loseLife.play();
+            }
             this.remove(obj2);
           }
         }
