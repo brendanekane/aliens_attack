@@ -35,42 +35,33 @@ class WelcomeView {
     ctx.clearRect(0,0, WelcomeView.DIM_X, WelcomeView.DIM_Y );
     ctx.font = "50px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("Aliens Attack!",190,200);
+    ctx.fillText("Aliens Attack!",160,200);
     // setTimeout(this.drawInfo, 200, ctx);
   }
 
   drawFirstLine(ctx) {
     ctx.font = "30px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("The aliens have invaded! You are",110,300);
+    ctx.fillText("The aliens have invaded! Your 8-bit",70,300);
   }
 
   drawSecondLine(ctx) {
     ctx.font = "30px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("no match for their superior technology",50,350);
+    ctx.fillText("ship is no match for their superior",85,350);
   }
 
   drawThirdLine(ctx) {
     ctx.font = "30px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("and smooth animation!",185,400);
+    ctx.fillText("technology and smooth animation!",80,400);
   }
 
   drawFourthLine(ctx) {
     ctx.font = "30px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("Press the button on the left to start",70,450);
+    ctx.fillText("Press the button on the left to start",70,550);
   }
-
-  wait(ms){
-   const start = new Date().getTime();
-   let end = start;
-   while(end < start + ms) {
-     end = new Date().getTime();
-  }
-}
-
 
 }
 
