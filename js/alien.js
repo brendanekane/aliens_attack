@@ -9,7 +9,7 @@ class Alien extends MovingObject {
   constructor(options = {}) {
     options.color = ALIENDEFAULT.color;
     options.radius = ALIENDEFAULT.radius;
-    options.vel = [2, .5];
+    options.vel = [2, 1];
     super(options);
     this.health = options.health || 1;
     this.row = options.row || 1;

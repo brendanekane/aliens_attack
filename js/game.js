@@ -148,7 +148,7 @@ class Game {
           if (alien.vel[0] < 7.5) {
             alien.vel[0] += .02;
           }
-          alien.vel[1] += .1;
+          alien.vel[1] += .07;
           alien.pos[1] += alien.vel[1];
         });
         this.rightBound = true;
@@ -174,7 +174,7 @@ class Game {
             if (alien.vel[0] < 7.5) {
               alien.vel[0] += .02;
             }
-            alien.vel[1] += .1;
+            alien.vel[1] += .07;
             alien.pos[1] += alien.vel[1];
           });
           this.rightBound = false;

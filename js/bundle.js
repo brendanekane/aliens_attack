@@ -368,7 +368,7 @@ var Game = function () {
             if (alien.vel[0] < 7.5) {
               alien.vel[0] += .02;
             }
-            alien.vel[1] += .1;
+            alien.vel[1] += .07;
             alien.pos[1] += alien.vel[1];
           });
           this.rightBound = true;
@@ -392,7 +392,7 @@ var Game = function () {
               if (alien.vel[0] < 7.5) {
                 alien.vel[0] += .02;
               }
-              alien.vel[1] += .1;
+              alien.vel[1] += .07;
               alien.pos[1] += alien.vel[1];
             });
             this.rightBound = false;
@@ -579,7 +579,7 @@ var Alien = function (_MovingObject) {
 
     options.color = ALIENDEFAULT.color;
     options.radius = ALIENDEFAULT.radius;
-    options.vel = [2, .5];
+    options.vel = [2, 1];
 
     var _this = _possibleConstructorReturn(this, (Alien.__proto__ || Object.getPrototypeOf(Alien)).call(this, options));
 
