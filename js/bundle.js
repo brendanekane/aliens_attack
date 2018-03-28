@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -210,7 +210,7 @@ var Alien = __webpack_require__(4);
 var Ship = __webpack_require__(5);
 var Util = __webpack_require__(1);
 var Bullet = __webpack_require__(2);
-var ShipCover = __webpack_require__(7);
+var ShipCover = __webpack_require__(8);
 
 var Game = function () {
   function Game(game) {
@@ -687,228 +687,6 @@ module.exports = Ship;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-var Game = __webpack_require__(3);
-var GameView = __webpack_require__(8);
-var WelcomeView = __webpack_require__(10);
-var gameTheme = void 0;
-
-document.addEventListener("DOMContentLoaded", function () {
-  var canvasEl = document.getElementsByTagName("canvas")[0];
-  var ctx = canvasEl.getContext("2d");
-  var game = new Game();
-  new WelcomeView(ctx).start();
-  var welcome = document.getElementById('welcome');
-  welcome.loop = true;
-  welcome.play();
-});
-
-document.getElementById("start-Btn").addEventListener("click", function () {
-  welcome.pause();
-  var canvasEl = document.getElementsByTagName("canvas")[0];
-  var ctx = canvasEl.getContext("2d");
-  var game = new Game();
-  var view = new GameView(game, ctx);
-  view.start();
-  var theme = document.getElementById('theme');
-  theme.muted = false;
-  theme.loop = true;
-  theme.play();
-});
-
-document.getElementById('mute-Btn').addEventListener("click", function () {
-  var audioTags = document.getElementsByTagName("audio");
-  var audioArr = [].slice.call(audioTags);
-  audioArr.forEach(function (audio) {
-    audio.muted = !audio.muted;
-  });
-});
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Util = __webpack_require__(1);
-
-var ShipCover = function () {
-  function ShipCover(options) {
-    _classCallCheck(this, ShipCover);
-
-    this.pos = options.pos;
-    this.game = options.game;
-    this.color = 'grey';
-    this.radius = 40;
-    this.health = 20;
-    this.id = options.id || 1;
-  }
-
-  _createClass(ShipCover, [{
-    key: "draw",
-    value: function draw(ctx) {
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI);
-
-      ctx.fill();
-    }
-  }, {
-    key: "collidedWith",
-    value: function collidedWith(otherObj) {
-      var center = Util.distance(this.pos, otherObj.pos);
-      return center < this.radius + otherObj.radius;
-    }
-
-    // collisionsToRemove(otherObj) {
-    //
-    //   this.game.remove(otherObj);
-    // }
-
-  }]);
-
-  return ShipCover;
-}();
-
-module.exports = ShipCover;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Game = __webpack_require__(3);
-var Alien = __webpack_require__(4);
-var Ship = __webpack_require__(5);
-var Starfield = __webpack_require__(9);
-
-var GameView = function () {
-  function GameView(game, ctx) {
-    _classCallCheck(this, GameView);
-
-    this.game = game;
-    this.ctx = ctx;
-  }
-
-  _createClass(GameView, [{
-    key: "sf",
-    value: function sf() {
-
-      return new Starfield({
-        canvas: '#star-canvas',
-        numStars: 800,
-        dx: 0.05,
-        dy: 0.025,
-        maxRadius: 2,
-        shootingStarInterval: 5
-      });
-    }
-  }, {
-    key: "start",
-    value: function start() {
-      setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
-      // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
-      // this.lastTime = 0;
-      // requestAnimationFrame(this.animate.bind(this));
-      setInterval(Game.prototype.alienShoot.bind(this.game), 200);
-      this.bindKeys();
-      this.sf().start();
-    }
-  }, {
-    key: "bindShip",
-    value: function bindShip() {
-      var ship = this.game.ship[0];
-      return ship;
-    }
-  }, {
-    key: "bindKeys",
-    value: function bindKeys() {
-      var _this = this;
-
-      Object.keys(GameView.MOVES).forEach(function (k) {
-        key(k, function () {
-          _this.bindShip().power(GameView.MOVES[k]);
-        });
-      });
-
-      var delayShot = true;
-
-      key('w', function () {
-        if (delayShot) {
-          delayShot = false;
-          _this.bindShip().shoot();
-          setTimeout(function () {
-            delayShot = true;
-          }, 200);
-        }
-      });
-
-      // key('w+a', () =>{
-      //   if (delayShot) {
-      //     debugger
-      //     delayShot = false;
-      //     this.bindShip().power(GameView.MOVES[a]);
-      //     this.bindShip().shoot();
-      //     setTimeout(function() { delayShot = true; }, 200);
-      //   }
-      // });
-
-      // key('w+d', () =>{
-      //   if (delayShot) {
-      //     delayShot = false;
-      //     this.bindShip().power(GameView.MOVES[d]);
-      //     this.bindShip().shoot();
-      //     setTimeout(function() { delayShot = true; }, 200);
-      //   }
-      // });
-    }
-
-    //not implemented yet
-    // animate(time) {
-    //   const timeDelta = time - this.lastTime;
-    //   Game.prototype.step(timeDelta);
-    //   Game.prototype.draw(this.ctx);
-    //   this.lastTime = time;
-    //
-    //   requestAnimationFrame(this.animate.bind(this));
-    // }
-
-  }, {
-    key: "replay",
-    value: function replay(ctx) {
-      var newGame = new Game();
-      this.game = newGame;
-    }
-  }]);
-
-  return GameView;
-}();
-
-GameView.MOVES = {
-  a: [-7, 0],
-  d: [7, 0],
-  left: [-7, 0],
-  right: [7, 0]
-};
-module.exports = GameView;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
 /*
 
 The MIT License (MIT)
@@ -1072,6 +850,228 @@ return Starfield
 })
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Game = __webpack_require__(3);
+var GameView = __webpack_require__(9);
+var WelcomeView = __webpack_require__(10);
+var gameTheme = void 0;
+
+document.addEventListener("DOMContentLoaded", function () {
+  var canvasEl = document.getElementsByTagName("canvas")[0];
+  var ctx = canvasEl.getContext("2d");
+  var game = new Game();
+  new WelcomeView(ctx).start();
+  var welcome = document.getElementById('welcome');
+  welcome.loop = true;
+  welcome.play();
+});
+
+document.getElementById("start-Btn").addEventListener("click", function () {
+  welcome.pause();
+  var canvasEl = document.getElementsByTagName("canvas")[0];
+  var ctx = canvasEl.getContext("2d");
+  var game = new Game();
+  var view = new GameView(game, ctx);
+  view.start();
+  var theme = document.getElementById('theme');
+  theme.muted = false;
+  theme.loop = true;
+  theme.play();
+});
+
+document.getElementById('mute-Btn').addEventListener("click", function () {
+  var audioTags = document.getElementsByTagName("audio");
+  var audioArr = [].slice.call(audioTags);
+  audioArr.forEach(function (audio) {
+    audio.muted = !audio.muted;
+  });
+});
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Util = __webpack_require__(1);
+
+var ShipCover = function () {
+  function ShipCover(options) {
+    _classCallCheck(this, ShipCover);
+
+    this.pos = options.pos;
+    this.game = options.game;
+    this.color = 'grey';
+    this.radius = 40;
+    this.health = 20;
+    this.id = options.id || 1;
+  }
+
+  _createClass(ShipCover, [{
+    key: "draw",
+    value: function draw(ctx) {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI);
+
+      ctx.fill();
+    }
+  }, {
+    key: "collidedWith",
+    value: function collidedWith(otherObj) {
+      var center = Util.distance(this.pos, otherObj.pos);
+      return center < this.radius + otherObj.radius;
+    }
+
+    // collisionsToRemove(otherObj) {
+    //
+    //   this.game.remove(otherObj);
+    // }
+
+  }]);
+
+  return ShipCover;
+}();
+
+module.exports = ShipCover;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Game = __webpack_require__(3);
+var Alien = __webpack_require__(4);
+var Ship = __webpack_require__(5);
+var Starfield = __webpack_require__(6);
+
+var GameView = function () {
+  function GameView(game, ctx) {
+    _classCallCheck(this, GameView);
+
+    this.game = game;
+    this.ctx = ctx;
+  }
+
+  _createClass(GameView, [{
+    key: "sf",
+    value: function sf() {
+
+      return new Starfield({
+        canvas: '#star-canvas',
+        numStars: 800,
+        dx: 0.05,
+        dy: 0.025,
+        maxRadius: 2,
+        shootingStarInterval: 5
+      });
+    }
+  }, {
+    key: "start",
+    value: function start() {
+      setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
+      // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
+      // this.lastTime = 0;
+      // requestAnimationFrame(this.animate.bind(this));
+      setInterval(Game.prototype.alienShoot.bind(this.game), 200);
+      this.bindKeys();
+      this.sf().start();
+    }
+  }, {
+    key: "bindShip",
+    value: function bindShip() {
+      var ship = this.game.ship[0];
+      return ship;
+    }
+  }, {
+    key: "bindKeys",
+    value: function bindKeys() {
+      var _this = this;
+
+      Object.keys(GameView.MOVES).forEach(function (k) {
+        key(k, function () {
+          _this.bindShip().power(GameView.MOVES[k]);
+        });
+      });
+
+      var delayShot = true;
+
+      key('w', function () {
+        if (delayShot) {
+          delayShot = false;
+          _this.bindShip().shoot();
+          setTimeout(function () {
+            delayShot = true;
+          }, 200);
+        }
+      });
+
+      // key('w+a', () =>{
+      //   if (delayShot) {
+      //     debugger
+      //     delayShot = false;
+      //     this.bindShip().power(GameView.MOVES[a]);
+      //     this.bindShip().shoot();
+      //     setTimeout(function() { delayShot = true; }, 200);
+      //   }
+      // });
+
+      // key('w+d', () =>{
+      //   if (delayShot) {
+      //     delayShot = false;
+      //     this.bindShip().power(GameView.MOVES[d]);
+      //     this.bindShip().shoot();
+      //     setTimeout(function() { delayShot = true; }, 200);
+      //   }
+      // });
+    }
+
+    //not implemented yet
+    // animate(time) {
+    //   const timeDelta = time - this.lastTime;
+    //   Game.prototype.step(timeDelta);
+    //   Game.prototype.draw(this.ctx);
+    //   this.lastTime = time;
+    //
+    //   requestAnimationFrame(this.animate.bind(this));
+    // }
+
+  }, {
+    key: "replay",
+    value: function replay(ctx) {
+      var newGame = new Game();
+      this.game = newGame;
+    }
+  }]);
+
+  return GameView;
+}();
+
+GameView.MOVES = {
+  a: [-7, 0],
+  d: [7, 0],
+  left: [-7, 0],
+  right: [7, 0]
+};
+module.exports = GameView;
+
+/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1082,7 +1082,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Starfield = __webpack_require__(9);
+var Starfield = __webpack_require__(6);
 
 var WelcomeView = function () {
   function WelcomeView(ctx) {
