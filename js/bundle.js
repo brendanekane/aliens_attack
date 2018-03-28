@@ -879,7 +879,6 @@ document.getElementById("start-Btn").addEventListener("click", function () {
   var view = new GameView(game, ctx);
   view.start();
   var theme = document.getElementById('theme');
-  theme.muted = false;
   theme.loop = true;
   theme.play();
 });

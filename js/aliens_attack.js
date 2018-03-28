@@ -22,7 +22,6 @@ document.getElementById("start-Btn").addEventListener("click", () =>{
   const view = new GameView(game, ctx);
   view.start();
   const theme = document.getElementById('theme');
-  theme.muted = false;
   theme.loop = true;
   theme.play();
 });
