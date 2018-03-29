@@ -44,7 +44,8 @@ class GameView {
     });
 
     let delayShot = true;
-
+    //try conditionally checking if key.isPressed("key") in ship class for shooting
+    // and moving at the same time
     key('w', () =>{
       if (delayShot) {
         delayShot = false;
@@ -52,25 +53,6 @@ class GameView {
         setTimeout(function() { delayShot = true; }, 200);
       }
     });
-
-    // key('w+a', () =>{
-    //   if (delayShot) {
-    //     debugger
-    //     delayShot = false;
-    //     this.bindShip().power(GameView.MOVES[a]);
-    //     this.bindShip().shoot();
-    //     setTimeout(function() { delayShot = true; }, 200);
-    //   }
-    // });
-
-    // key('w+d', () =>{
-    //   if (delayShot) {
-    //     delayShot = false;
-    //     this.bindShip().power(GameView.MOVES[d]);
-    //     this.bindShip().shoot();
-    //     setTimeout(function() { delayShot = true; }, 200);
-    //   }
-    // });
   }
 
   //not implemented yet
@@ -82,12 +64,12 @@ class GameView {
   //
   //   requestAnimationFrame(this.animate.bind(this));
   // }
-
-  replay(ctx) {
-    const newGame = new Game();
-    this.game = newGame;
-
-  }
+  // 
+  // replay(ctx) {
+  //   const newGame = new Game();
+  //   this.game = newGame;
+  //
+  // }
 
 }
 

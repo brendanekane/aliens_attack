@@ -633,6 +633,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var MovingObject = __webpack_require__(0);
 var Bullet = __webpack_require__(2);
+var delayShot = true;
 
 var SHIPDEFAULT = {
   color: 'black',
@@ -657,11 +658,24 @@ var Ship = function (_MovingObject) {
     _this.health = 5;
     return _this;
   }
+  //try conditionally checking if key.isPressed("key") for shooting
+  // and moving at the same time
+
 
   _createClass(Ship, [{
     key: "power",
     value: function power(impulse) {
-      if (this.pos[0] > 19 && this.pos[0] < 673) {
+
+      if (this.pos[0] > 19 && this.pos[0] < 673 && key.isPressed("w")) {
+        if (delayShot) {
+          delayShot = false;
+          this.shoot();
+          setTimeout(function () {
+            delayShot = true;
+          }, 200);
+        }
+        this.pos[0] += impulse[0];
+      } else if (this.pos[0] > 19 && this.pos[0] < 673) {
         this.pos[0] += impulse[0];
       } else if (this.pos[0] >= 673) {
         this.pos[0] -= 2;
@@ -1010,7 +1024,8 @@ var GameView = function () {
       });
 
       var delayShot = true;
-
+      //try conditionally checking if key.isPressed("key") in ship class for shooting
+      // and moving at the same time
       key('w', function () {
         if (delayShot) {
           delayShot = false;
@@ -1020,25 +1035,6 @@ var GameView = function () {
           }, 200);
         }
       });
-
-      // key('w+a', () =>{
-      //   if (delayShot) {
-      //     debugger
-      //     delayShot = false;
-      //     this.bindShip().power(GameView.MOVES[a]);
-      //     this.bindShip().shoot();
-      //     setTimeout(function() { delayShot = true; }, 200);
-      //   }
-      // });
-
-      // key('w+d', () =>{
-      //   if (delayShot) {
-      //     delayShot = false;
-      //     this.bindShip().power(GameView.MOVES[d]);
-      //     this.bindShip().shoot();
-      //     setTimeout(function() { delayShot = true; }, 200);
-      //   }
-      // });
     }
 
     //not implemented yet
@@ -1050,13 +1046,13 @@ var GameView = function () {
     //
     //   requestAnimationFrame(this.animate.bind(this));
     // }
+    // 
+    // replay(ctx) {
+    //   const newGame = new Game();
+    //   this.game = newGame;
+    //
+    // }
 
-  }, {
-    key: "replay",
-    value: function replay(ctx) {
-      var newGame = new Game();
-      this.game = newGame;
-    }
   }]);
 
   return GameView;
