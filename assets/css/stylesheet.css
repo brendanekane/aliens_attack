@@ -108,6 +108,7 @@ body{
 }
 
 #start-Btn{
+  cursor: pointer;
   font-family: 'Kreon', serif;
   font-weight:700;
   text-transform:uppercase;
@@ -154,6 +155,7 @@ body{
 }
 
 #start-Btn:before{
+  cursor: pointer;
   position:absolute;
   display:block;
   content:"";
@@ -176,6 +178,7 @@ body{
 }
 
 #start-Btn:after{
+  cursor: pointer;
   position:absolute;
   display:block;
   content:"";
@@ -200,6 +203,7 @@ body{
     0 15px 20px 0 rgba(0,0,0,0.40);
 }
 #start-Btn:active{
+  cursor: pointer;
   box-shadow:
     0 -3px 1px 0px rgba(255, 255, 255,0.6),
     0 -7px 8px 9px rgba(240, 240, 240,0.8),
@@ -215,7 +219,8 @@ body{
     0 5px 20px 0px rgba(0,0,0,0.20);
 }
 
-#mute-Btn{
+#new-Btn{
+  cursor: pointer;
   font-family: 'Kreon', serif;
   font-weight:700;
   text-transform:uppercase;
@@ -261,7 +266,8 @@ body{
 
 }
 
-#mute-Btn:before{
+#new-Btn:before{
+  cursor: pointer;
   position:absolute;
   display:block;
   content:"";
@@ -283,7 +289,8 @@ body{
     0 5px 5px 0 rgba(255,255,255,0.3);
 }
 
-#mute-Btn:after{
+#new-Btn:after{
+  cursor: pointer;
   position:absolute;
   display:block;
   content:"";
@@ -307,7 +314,8 @@ body{
     0 8px 14px 0 rgba(0,0,0,0.20),
     0 15px 20px 0 rgba(0,0,0,0.40);
 }
-#mute-Btn:active{
+#new-Btn:active{
+  cursor: pointer;
   box-shadow:
     0 -3px 1px 0px rgba(255, 255, 255,0.6),
     0 -7px 8px 9px rgba(240, 240, 240,0.8),
@@ -321,4 +329,11 @@ body{
     0 5px 10px 8px rgba(0,0,0,0.20),
     0 0px 10px 9px rgba(0,0,0,0.20),
     0 5px 20px 0px rgba(0,0,0,0.20);
+}
+
+#mute-Btn{
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+  cursor: pointer;
 }
