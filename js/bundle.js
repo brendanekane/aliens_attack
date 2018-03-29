@@ -225,6 +225,7 @@ var Game = function () {
     this.cover = [];
     this.addCover();
     this.shipLives = 4;
+    this.playing = true;
   }
 
   // create objects, push to respective arrays, draw
@@ -512,6 +513,7 @@ var Game = function () {
       ctx.font = "50px uni_05_53regular";
       ctx.fillStyle = 'yellow';
       ctx.fillText("Game Over", 210, 350);
+      this.playing = false;
     }
   }, {
     key: "win",
@@ -519,6 +521,7 @@ var Game = function () {
       ctx.font = "50px uni_05_53regular";
       ctx.fillStyle = 'yellow';
       ctx.fillText("You Won!", 230, 350);
+      this.playing = false;
     }
   }, {
     key: "alienWinEdge",
@@ -665,8 +668,7 @@ var Ship = function (_MovingObject) {
   _createClass(Ship, [{
     key: "power",
     value: function power(impulse) {
-
-      if (this.pos[0] > 19 && this.pos[0] < 673 && key.isPressed("w")) {
+      if (this.pos[0] > 19 && this.pos[0] < 673 && key.isPressed("w") && this.game.playing) {
         if (delayShot) {
           delayShot = false;
           this.shoot();
@@ -675,20 +677,22 @@ var Ship = function (_MovingObject) {
           }, 200);
         }
         this.pos[0] += impulse[0];
-      } else if (this.pos[0] > 19 && this.pos[0] < 673) {
+      } else if (this.pos[0] > 19 && this.pos[0] < 673 && this.game.playing) {
         this.pos[0] += impulse[0];
-      } else if (this.pos[0] >= 673) {
+      } else if (this.pos[0] >= 673 && this.game.playing) {
         this.pos[0] -= 2;
-      } else if (this.pos[0] <= 19) {
+      } else if (this.pos[0] <= 19 && this.game.playing) {
         this.pos[0] += 2;
       }
     }
   }, {
     key: "shoot",
     value: function shoot() {
-      var bulletPos = this.pos.slice(0);
-      var bullet = new Bullet({ pos: bulletPos, game: this.game });
-      this.game.pushBullet(bullet);
+      if (this.game.playing) {
+        var bulletPos = this.pos.slice(0);
+        var bullet = new Bullet({ pos: bulletPos, game: this.game });
+        this.game.pushBullet(bullet);
+      }
     }
   }]);
 
@@ -1019,7 +1023,9 @@ var GameView = function () {
 
       Object.keys(GameView.MOVES).forEach(function (k) {
         key(k, function () {
-          _this.bindShip().power(GameView.MOVES[k]);
+          if (_this.game.playing) {
+            _this.bindShip().power(GameView.MOVES[k]);
+          }
         });
       });
 
@@ -1027,7 +1033,7 @@ var GameView = function () {
       //try conditionally checking if key.isPressed("key") in ship class for shooting
       // and moving at the same time
       key('w', function () {
-        if (delayShot) {
+        if (delayShot && _this.game.playing) {
           delayShot = false;
           _this.bindShip().shoot();
           setTimeout(function () {
@@ -1046,7 +1052,7 @@ var GameView = function () {
     //
     //   requestAnimationFrame(this.animate.bind(this));
     // }
-    // 
+    //
     // replay(ctx) {
     //   const newGame = new Game();
     //   this.game = newGame;

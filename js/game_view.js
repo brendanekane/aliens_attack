@@ -38,16 +38,18 @@ class GameView {
 
   bindKeys() {
     Object.keys(GameView.MOVES).forEach(k => {
-      key(k, () => {
-        this.bindShip().power(GameView.MOVES[k]);
-      });
+        key(k, () => {
+          if (this.game.playing) {
+            this.bindShip().power(GameView.MOVES[k]);
+          }
+        });
     });
 
     let delayShot = true;
     //try conditionally checking if key.isPressed("key") in ship class for shooting
     // and moving at the same time
     key('w', () =>{
-      if (delayShot) {
+      if (delayShot && this.game.playing) {
         delayShot = false;
         this.bindShip().shoot();
         setTimeout(function() { delayShot = true; }, 200);
@@ -64,7 +66,7 @@ class GameView {
   //
   //   requestAnimationFrame(this.animate.bind(this));
   // }
-  // 
+  //
   // replay(ctx) {
   //   const newGame = new Game();
   //   this.game = newGame;

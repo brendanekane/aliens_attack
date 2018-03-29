@@ -15,6 +15,7 @@ class Game {
     this.cover = [];
     this.addCover();
     this.shipLives = 4;
+    this.playing = true;
   }
 
 
@@ -281,12 +282,14 @@ class Game {
     ctx.font = "50px uni_05_53regular";
     ctx.fillStyle = 'yellow';
     ctx.fillText("Game Over",210,350);
+    this.playing = false;
   }
 
   win(ctx) {
     ctx.font = "50px uni_05_53regular";
     ctx.fillStyle = 'yellow';
     ctx.fillText("You Won!",230,350);
+    this.playing = false;
   }
 
   alienWinEdge() {

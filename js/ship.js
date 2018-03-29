@@ -19,27 +19,28 @@ class Ship extends MovingObject {
   //try conditionally checking if key.isPressed("key") for shooting
   // and moving at the same time
   power(impulse) {
-
-    if ((this.pos[0] > 19 && this.pos[0] < 673) && key.isPressed("w")) {
+    if ((this.pos[0] > 19 && this.pos[0] < 673) && key.isPressed("w") && (this.game.playing)) {
       if (delayShot) {
         delayShot = false;
         this.shoot();
         setTimeout(function() { delayShot = true; }, 200);
       }
       this.pos[0] += impulse[0];
-    } else if (this.pos[0] > 19 && this.pos[0] < 673) {
+    } else if ((this.pos[0] > 19) && (this.pos[0] < 673)  && (this.game.playing)) {
       this.pos[0] += impulse[0];
-    } else if (this.pos[0] >= 673) {
+    } else if ((this.pos[0] >= 673) && (this.game.playing)) {
       this.pos[0] -= 2;
-    } else if(this.pos[0] <= 19) {
+    } else if((this.pos[0] <= 19) && (this.game.playing)) {
       this.pos[0] += 2;
     }
   }
 
   shoot() {
-    const bulletPos = this.pos.slice(0);
-    const bullet = new Bullet({pos: bulletPos, game: this.game});
-    this.game.pushBullet(bullet);
+    if (this.game.playing) {
+      const bulletPos = this.pos.slice(0);
+      const bullet = new Bullet({pos: bulletPos, game: this.game});
+      this.game.pushBullet(bullet);
+    }
   }
 
 }
