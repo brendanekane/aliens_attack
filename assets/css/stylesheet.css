@@ -179,6 +179,7 @@ body{
 
 #start-Btn:after{
   cursor: pointer;
+  pointer-events: none;
   position:absolute;
   display:block;
   content:"";

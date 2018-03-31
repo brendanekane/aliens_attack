@@ -22,6 +22,10 @@ class WelcomeView {
     this.sf().start();
   }
 
+  stop() {
+    clearInterval(this.start());
+  }
+
   step(ctx) {
     // this.drawWelcome(ctx)
     setTimeout(this.drawWelcome, 500, ctx);

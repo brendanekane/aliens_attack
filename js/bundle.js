@@ -877,28 +877,31 @@ return Starfield
 var Game = __webpack_require__(3);
 var GameView = __webpack_require__(9);
 var WelcomeView = __webpack_require__(10);
-var gameTheme = void 0;
+var startBtn = document.getElementById("start-Btn");
 
 document.addEventListener("DOMContentLoaded", function () {
   var canvasEl = document.getElementsByTagName("canvas")[0];
   var ctx = canvasEl.getContext("2d");
   var game = new Game();
-  new WelcomeView(ctx).start();
+  var view = new WelcomeView(ctx).start();
   var welcome = document.getElementById('welcome');
   welcome.loop = true;
   welcome.play();
 });
 
-document.getElementById("start-Btn").addEventListener("click", function () {
+startBtn.addEventListener("click", function () {
   welcome.pause();
-  var canvasEl = document.getElementsByTagName("canvas")[0];
-  var ctx = canvasEl.getContext("2d");
-  var game = new Game();
-  var view = new GameView(game, ctx);
-  view.start();
-  var theme = document.getElementById('theme');
-  theme.loop = true;
-  theme.play();
+  if (startBtn.disabled === false) {
+    var canvasEl = document.getElementsByTagName("canvas")[0];
+    var ctx = canvasEl.getContext("2d");
+    var game = new Game();
+    var view = new GameView(game, ctx);
+    view.start();
+    var theme = document.getElementById('theme');
+    theme.loop = true;
+    theme.play();
+    startBtn.disabled = true;
+  }
 });
 
 document.getElementById('mute-Btn').addEventListener("click", function () {
@@ -1110,6 +1113,11 @@ var WelcomeView = function () {
     value: function start() {
       setInterval(this.step(this.ctx), 20);
       this.sf().start();
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      clearInterval(this.start());
     }
   }, {
     key: 'step',
