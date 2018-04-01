@@ -3,6 +3,14 @@ const Starfield = require('canvas-starfield');
 class WelcomeView {
   constructor(ctx) {
     this.ctx = ctx;
+
+    this.drawWelcome = this.drawWelcome.bind(this);
+    this.drawFirstLine = this.drawFirstLine.bind(this);
+    this.drawSecondLine = this.drawSecondLine.bind(this);
+    this.drawThirdLine = this.drawThirdLine.bind(this);
+    this.drawFourthLine = this.drawFourthLine.bind(this);
+    this.clearStart = this.clearStart.bind(this);
+    this.flashStart = this.flashStart.bind(this);
   }
 
   sf() {
@@ -40,19 +48,18 @@ class WelcomeView {
     ctx.font = "50px uni_05_53regular";
     ctx.fillStyle = 'yellow';
     ctx.fillText("Aliens Attack!",160,200);
-    // setTimeout(this.drawInfo, 200, ctx);
   }
 
   drawFirstLine(ctx) {
     ctx.font = "30px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("The aliens have invaded! Your 8-bit",70,300);
+    ctx.fillText("The aliens have invaded!",150,300);
   }
 
   drawSecondLine(ctx) {
     ctx.font = "30px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("ship is no match for their superior",85,350);
+    ctx.fillText("Your ship is no match for their superior",35,350);
   }
 
   drawThirdLine(ctx) {
@@ -64,7 +71,19 @@ class WelcomeView {
   drawFourthLine(ctx) {
     ctx.font = "30px uni_05_53regular";
     ctx.fillStyle = 'yellow';
-    ctx.fillText("Press the button on the left to start",70,550);
+    ctx.fillText("Press the start button on the left",85,550);
+    // setInterval(this.clearStart, 1000, ctx)
+    // setInterval(this.flashStart, 2000, ctx)
+  }
+
+  clearStart(ctx) {
+    ctx.clearRect(80, 530, WelcomeView.DIM_X, 100);
+  }
+
+  flashStart(ctx) {
+    ctx.font = "30px uni_05_53regular";
+    ctx.fillStyle = 'yellow';
+    ctx.fillText("Press the start button on the left",85,550);
   }
 
 }

@@ -980,6 +980,7 @@ var Game = __webpack_require__(3);
 var Alien = __webpack_require__(4);
 var Ship = __webpack_require__(5);
 var Starfield = __webpack_require__(6);
+var WelcomeView = __webpack_require__(10);
 
 var GameView = function () {
   function GameView(game, ctx) {
@@ -1005,6 +1006,7 @@ var GameView = function () {
   }, {
     key: "start",
     value: function start() {
+      debugger;
       setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
       // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
       // this.lastTime = 0;
@@ -1093,6 +1095,14 @@ var WelcomeView = function () {
     _classCallCheck(this, WelcomeView);
 
     this.ctx = ctx;
+
+    this.drawWelcome = this.drawWelcome.bind(this);
+    this.drawFirstLine = this.drawFirstLine.bind(this);
+    this.drawSecondLine = this.drawSecondLine.bind(this);
+    this.drawThirdLine = this.drawThirdLine.bind(this);
+    this.drawFourthLine = this.drawFourthLine.bind(this);
+    this.clearStart = this.clearStart.bind(this);
+    this.flashStart = this.flashStart.bind(this);
   }
 
   _createClass(WelcomeView, [{
@@ -1136,21 +1146,20 @@ var WelcomeView = function () {
       ctx.font = "50px uni_05_53regular";
       ctx.fillStyle = 'yellow';
       ctx.fillText("Aliens Attack!", 160, 200);
-      // setTimeout(this.drawInfo, 200, ctx);
     }
   }, {
     key: 'drawFirstLine',
     value: function drawFirstLine(ctx) {
       ctx.font = "30px uni_05_53regular";
       ctx.fillStyle = 'yellow';
-      ctx.fillText("The aliens have invaded! Your 8-bit", 70, 300);
+      ctx.fillText("The aliens have invaded!", 150, 300);
     }
   }, {
     key: 'drawSecondLine',
     value: function drawSecondLine(ctx) {
       ctx.font = "30px uni_05_53regular";
       ctx.fillStyle = 'yellow';
-      ctx.fillText("ship is no match for their superior", 85, 350);
+      ctx.fillText("Your ship is no match for their superior", 35, 350);
     }
   }, {
     key: 'drawThirdLine',
@@ -1164,7 +1173,21 @@ var WelcomeView = function () {
     value: function drawFourthLine(ctx) {
       ctx.font = "30px uni_05_53regular";
       ctx.fillStyle = 'yellow';
-      ctx.fillText("Press the button on the left to start", 70, 550);
+      ctx.fillText("Press the start button on the left", 85, 550);
+      // setInterval(this.clearStart, 1000, ctx)
+      // setInterval(this.flashStart, 2000, ctx)
+    }
+  }, {
+    key: 'clearStart',
+    value: function clearStart(ctx) {
+      ctx.clearRect(80, 530, WelcomeView.DIM_X, 100);
+    }
+  }, {
+    key: 'flashStart',
+    value: function flashStart(ctx) {
+      ctx.font = "30px uni_05_53regular";
+      ctx.fillStyle = 'yellow';
+      ctx.fillText("Press the start button on the left", 85, 550);
     }
   }]);
 

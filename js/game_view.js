@@ -2,6 +2,8 @@ const Game = require("./game.js");
 const Alien = require("./alien.js");
 const Ship = require("./ship.js");
 const Starfield = require('canvas-starfield');
+const WelcomeView = require('./welcome_view')
+
 
 class GameView {
   constructor(game, ctx) {
@@ -22,6 +24,7 @@ class GameView {
   }
 
   start() {
+    debugger
     setInterval(Game.prototype.step.bind(this.game, this.ctx), 20);
     // setInterval(Game.prototype.draw.bind(this.game, this.ctx), 20);
     // this.lastTime = 0;

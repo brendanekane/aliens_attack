@@ -267,7 +267,7 @@ body{
 
 }
 
-#new-Btn:before{
+/* #new-Btn:before{
   cursor: pointer;
   position:absolute;
   display:block;
@@ -275,8 +275,8 @@ body{
   top:0;
   left:0;
   margin: -1.929em;
-  width:7.857em;
-  height:7.857em;
+  width: 4.000em;
+  height:4.000em;
   border-radius:inherit;
   background:rgb(212,213,213);
   background-image:
@@ -288,7 +288,7 @@ body{
     inset 0 1px 3px 0 rgba(0,0,0,0.35),
     0 2px 1px 0 rgba(255,255,255,0.9),
     0 5px 5px 0 rgba(255,255,255,0.3);
-}
+} */
 
 #new-Btn:after{
   cursor: pointer;
