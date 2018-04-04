@@ -63,7 +63,7 @@ class Game {
   }
 
   alienShoot(){
-    if (this.shipLives !== 0) {
+    if (this.shipLives !== 0 && this.aliens.length !== 0) {
       const aliens = this.aliens;
       const alien = aliens[Math.floor((Math.random() * aliens.length))];
       const alienPos = alien.pos.slice(0);

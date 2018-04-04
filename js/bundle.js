@@ -278,7 +278,7 @@ var Game = function () {
   }, {
     key: "alienShoot",
     value: function alienShoot() {
-      if (this.shipLives !== 0) {
+      if (this.shipLives !== 0 && this.aliens.length !== 0) {
         var aliens = this.aliens;
         var alien = aliens[Math.floor(Math.random() * aliens.length)];
         var alienPos = alien.pos.slice(0);
