@@ -8,13 +8,15 @@
 #game-canvas{
   border-radius: 25px;
   box-shadow: 10px 10px 5px grey;
-  font-family: 'uni_05_53regular'
+  font-family: 'uni_05_53regular';
+  height: 600px;
 
 }
 
 #star-canvas{
   border-radius: 25px;
-  font-family: 'uni_05_53regular'
+  font-family: 'uni_05_53regular';
+  height: 600px;
 }
 
 h1{
