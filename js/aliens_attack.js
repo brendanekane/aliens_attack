@@ -1,7 +1,7 @@
 const Game = require('./game.js');
 const GameView = require("./game_view.js");
 const WelcomeView = require("./welcome_view.js");
-const startBtn = document.getElementById("start-Btn");
+const startBtn = document.getElementById("arcade-start-btn");
 
 document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementsByTagName("canvas")[0];

@@ -999,7 +999,7 @@ module.exports = WelcomeView;
 var Game = __webpack_require__(3);
 var GameView = __webpack_require__(10);
 var WelcomeView = __webpack_require__(7);
-var startBtn = document.getElementById("start-Btn");
+var startBtn = document.getElementById("arcade-start-btn");
 
 document.addEventListener("DOMContentLoaded", function () {
   var canvasEl = document.getElementsByTagName("canvas")[0];
