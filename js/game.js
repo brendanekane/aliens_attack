@@ -21,13 +21,13 @@ class Game {
 
 // create objects, push to respective arrays, draw
 
-  createShip() {
-    const ship = new Ship({pos: [350, 640], game: this});
-    this.ship.push(ship);
-    return ship;
-  }
+  // createShip() {
+  //   const ship = new Ship({pos: [350, 640], game: this});
+  //   this.ship.push(ship);
+  //   return ship;
+  // }
 
-  createNewShip() {
+  createShip() {
     if (this.ship.length === 0 && this.shipLives > 0) {
       const ship = new Ship({pos: [350, 640], game: this});
       this.ship.push(ship);
@@ -314,7 +314,7 @@ class Game {
     } else if (this.aliens.length === 0) {
       this.win(ctx);
     }
-    this.createNewShip();
+    this.createShip();
   }
 }
 
